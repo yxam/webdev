@@ -28,7 +28,7 @@ func StartWorkers() {
 	go statsWorker()
 }
 
-func StartGin(string port) {
+func StartGin(port string){
 	gin.SetMode(gin.ReleaseMode)
 
 	router := gin.New()
