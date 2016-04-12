@@ -36,5 +36,5 @@ func StartGin(string port) {
 	router.GET("/index", index)
 	router.POST("/processInfo", processInfo)
 	
-	router.Run(":+"port)
+	router.Run(":"+port)
 }
