@@ -34,7 +34,7 @@ func StartGin(port string){
 	router := gin.New()
 	router.LoadHTMLGlob("resources/*.html")
 	router.Static("/static", "resources/static")
-	router.GET("/index", index)
+	router.GET("/", index)
 	router.POST("/processInfo", processInfo)
 	
 	router.Run(":"+port)
