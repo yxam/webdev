@@ -7,9 +7,14 @@ import (
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+                log.Fatal("$PORT must be set")
+        }
+
 	ConfigRuntime()
 	StartWorkers()
-	StartGin()
+	StartGin(port)
 }
 
 func ConfigRuntime() {
@@ -22,7 +27,7 @@ func StartWorkers() {
 	go statsWorker()
 }
 
-func StartGin() {
+func StartGin(string port) {
 	gin.SetMode(gin.ReleaseMode)
 
 	router := gin.New()
@@ -31,5 +36,5 @@ func StartGin() {
 	router.GET("/index", index)
 	router.POST("/processInfo", processInfo)
 	
-	router.Run(":8000")
+	router.Run(":+"port)
 }
