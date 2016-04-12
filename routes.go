@@ -23,9 +23,7 @@ func rateLimit(c *gin.Context) {
 	}
 }
 
-//func index(c *gin.Context) {
-//	c.Redirect(301, "/room/hn")
-//}
+
 
 func index(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{})
