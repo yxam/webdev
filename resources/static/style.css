@@ -1,0 +1,58 @@
+ body{
+        text-align: center;
+        background: #000000;
+    }
+
+    header{
+        margin: auto;
+        margin-bottom: 20px;
+        width: 90%;
+        height: 50px;
+        background: #2E64FE;
+    }
+
+    nav{
+        margin: auto;
+        margin-bottom: 20px;
+        width: 90%;
+        height: 50px;
+        background: #F3F781;
+    }
+
+    article{
+        display: inline-block;
+        margin: auto;
+        margin-right: 18px;
+        margin-bottom: 20px;
+        width: 58%;
+        height: 400px;
+        background: #F79F81;
+        
+        
+    }
+
+    section{
+        margin: auto;
+        margin-top: 40px;
+        width: 97%;
+        height: 350px;
+        background: #FA8258;
+    }
+
+    aside{
+        display: inline-block;
+        margin: auto;
+        margin-bottom: 20px;
+        width: 30%;
+        height: 400px;
+        background: #81F781;
+        
+        
+    }
+
+    footer{
+        margin: auto;
+        width: 90%;
+        height: 50px;
+        background: #FA5882;
+    }
