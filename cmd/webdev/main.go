@@ -37,7 +37,7 @@ func StartGin(port string){
 	router.GET("/", index)
 	router.POST("/processInfo", processInfo)
 	
-	if err := router.Run(":"+port); err != nil {
+	if err := router.Run(":" + port); err != nil {
 		log.Printf("error listening on port " + port + ": %v", err)
 	}
 }
