@@ -11,10 +11,13 @@ ReactDOM.render(React.createElement(
       null,
       "RUT: "
     ),
-    React.createElement(
-      "input", 
+    
+   React.createElement( "font", 
+			   { "color":"black"},
+   React.createElement( 
+     "input", 
       { type: "text", "class": "form-control", name: "rut", placeholder: "**.***.***-*" }
-    ),
+    )),
     React.createElement(
       "br"),
     React.createElement(
@@ -25,10 +28,12 @@ ReactDOM.render(React.createElement(
       { "class": "sr-only" },
       "Contraseña: "
     ),
+    React.createElement( "font", 
+			{ "color":"black"}, 
     React.createElement(
       "input", 
       { type: "pass", "class": "form-control", name: "pass", placeholder: "*******" }
-      ),
+      )),
     React.createElement(
       "br"),
     React.createElement(
