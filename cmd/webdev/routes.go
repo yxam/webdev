@@ -53,7 +53,7 @@ func processInfo(c *gin.Context) {
 		var resp response //Esta estructura llevara las información total
 		if inf.rut != inf_tmp.rut || inf.pass != inf_tmp.pass {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"message":"nil", // nil = No logeado
+				"inf_tmp.rut":"nil", // nil = No logeado
 				})		
 		}
 		return
