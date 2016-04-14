@@ -16,7 +16,7 @@ ReactDOM.render(React.createElement(
 			   { "color":"black"},
    React.createElement( 
      "input", 
-      { type: "text", "class": "form-control", name: "rut", placeholder: "**.***.***-*" }
+      { type: "text", "className": "form-control", name: "rut", placeholder: "**.***.***-*" }
     )),
     React.createElement(
       "br"),
@@ -33,7 +33,7 @@ ReactDOM.render(React.createElement(
 			{ "color":"black"}, 
       React.createElement(
         "input", 
-        { type: "pass", "class": "form-control", name: "pass", placeholder: "*******" }
+        { type: "pass", "className": "form-control", name: "pass", placeholder: "*******" }
       )
     ),
     React.createElement(
