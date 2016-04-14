@@ -4,6 +4,7 @@ import (
 	"runtime"
 	"log"
 	"os"
+	
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +22,6 @@ func main() {
 func ConfigRuntime() {
 	nuCPU := runtime.NumCPU()
 	runtime.GOMAXPROCS(nuCPU)
-	//fmt.Printf("Running with %d CPUs\n", nuCPU)
 }
 
 func StartWorkers() {
@@ -37,5 +37,7 @@ func StartGin(port string){
 	router.GET("/", index)
 	router.POST("/processInfo", processInfo)
 	
-	router.Run(":"+port)
+	if err := router.Run(":"+port); err != nil {
+		log.Printf("error listening on port " + port + ": %v", err)
+	}
 }
