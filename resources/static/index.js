@@ -28,12 +28,14 @@ ReactDOM.render(React.createElement(
       { "class": "sr-only" },
       "Contraseña: "
     ),
-    React.createElement( "font", 
+    React.createElement( 
+      "font", 
 			{ "color":"black"}, 
-    React.createElement(
-      "input", 
-      { type: "pass", "class": "form-control", name: "pass", placeholder: "*******" }
-      )),
+      React.createElement(
+        "input", 
+        { type: "pass", "class": "form-control", name: "pass", placeholder: "*******" }
+      )
+    ),
     React.createElement(
       "br"),
     React.createElement(
