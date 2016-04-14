@@ -27,7 +27,7 @@ ReactDOM.render(React.createElement(
       "Contraseña: "
     ),
     React.createElement(
-     "font", { color:"black"}
+     "font", { color:"black"},
       React.createElement("input", 
       { type: "pass", "class": "form-control", name: "pass", placeholder: "*******" })
       ),

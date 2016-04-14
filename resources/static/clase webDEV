@@ -1,0 +1,13 @@
+trello , forma eficiente y correcta de hacer un trello sería: 
+
+Todo: Por hacer|Started: En desarrollo|Finished: Terminado|Delivered: En producción|Done: Tercero aprueba actividad|
+
+Nombres de las actividades deben ser descriptivos, para la próxima entrega se deben agregar las nuevas dos columnas (Delivered, Done). 
+
+
+Landing Page : Home de página, bastante importante ya que es la primera interacción del usuario con nuestra web. Fénomeno embudo. |Landing|    |  100  | Este efecto es el embudo que no queremos lograr      | 2 |
+        |Registo|     |  50 |   Debemos tratar de producir el efecto contrario    |   50  |
+        |Éxito  |      | 2 |                                                     |   100   |
+
+
+A/B testing: Estudio para ver si nuestro sistema debe tener cambios
