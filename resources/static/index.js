@@ -1,12 +1,7 @@
 ReactDOM.render(React.createElement(
     "form",
-    { "className": "form-signin", "action": "/processInfo", "method":"post", "enctype":"application/json", name:"form1", onsuccess:"javascript:return Rut(document.form1.rut.value)"},
-    React.createElement(
-      "h2",
-      { "className": "form-sigin-heading" },
-      "Ingresar banco en linea"
-    ),
-    React.createElement(
+    { "className": "form-signin", "action": "/processInfo", "method":"post", "enctype":"application/json", name:"form1", onSubmit:"javascript:return Rut(document.form1.rut.value)"},    
+React.createElement(
       "label",
       null,
       "RUT: "
@@ -16,7 +11,7 @@ ReactDOM.render(React.createElement(
          { "color":"black"},
    React.createElement( 
      "input", 
-      { type: "text", "className": "form-control", name: "rut", placeholder: "**.***.***-*" }
+      { type: "text", "className": "form-control", name: "rut", placeholder: "**.***.***-*"}
     )),
     React.createElement(
       "br"),

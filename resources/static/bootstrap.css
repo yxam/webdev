@@ -5503,7 +5503,9 @@ button.list-group-item-danger.active:focus {
 }
 .panel-body {
   padding: 15px;
+
 }
+
 .panel-heading {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;
@@ -5512,6 +5514,20 @@ button.list-group-item-danger.active:focus {
 }
 .panel-heading > .dropdown .dropdown-toggle {
   color: inherit;
+}
+.panel-transparent {
+  background: none;
+  opacity: 0.5;
+}
+
+.panel-transparent .panel-heading{
+    background:blue;
+    
+}
+
+.panel-transparent .panel-body{
+    background:#E1FAE9;
+    
 }
 .panel-title {
   margin-top: 0;
