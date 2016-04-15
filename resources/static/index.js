@@ -4,7 +4,7 @@ ReactDOM.render(React.createElement(
 React.createElement(
       "label",
       null,
-      "RUT: "
+      React.createElement("font",{color:"black"},"RUT: ")
     ),
     
    React.createElement( "font", 
@@ -21,7 +21,7 @@ React.createElement(
     React.createElement(
       "label",
       { "class": "sr-only" },
-      "Contraseña: "
+      React.createElement("font",{color:"black"},"Contraseña: ")
     ),
     React.createElement( 
       "font", 
