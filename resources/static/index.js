@@ -46,4 +46,4 @@ ReactDOM.render(React.createElement(
       { class: "btn btn-primary", type: "submit"},
       React.createElement( "font", {color:"black"}, "Sigin")
     )
-), document.getElementById('example')); /*Fin Form
+), document.getElementById('example'));
