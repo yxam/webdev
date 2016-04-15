@@ -1,6 +1,6 @@
 ReactDOM.render(React.createElement(
     "form",
-    { "className": "form-signin", "action": "/processInfo", "method":"post", "enctype":"application/json", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},
+    { "className": "form-signin", "action": "/processInfo", "method":"post", "enctype":"application/json", name:"form1", onSubmit:"javascript:return Rut(document.form1.rut.value)"},
     React.createElement(
       "h2",
       { "className": "form-sigin-heading" },
@@ -46,5 +46,4 @@ ReactDOM.render(React.createElement(
       { class: "btn btn-primary", type: "submit"},
       React.createElement( "font", {color:"black"}, "Sigin")
     )
-), document.getElementById('example'));
-
+), document.getElementById('example')); /*Fin Form
