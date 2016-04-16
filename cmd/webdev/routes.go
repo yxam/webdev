@@ -49,7 +49,7 @@ func processInfo(c *gin.Context) {
 	inf.rut = "10100100-1"
 	inf.pass = "1234"
 	
-	if inf.rut != "" && inf.pass != "" {
+	if inf_tmp.rut != "" && inf_tmp.pass != "" {
 		var resp response //Esta estructura llevara las información total
 		if inf.rut != inf_tmp.rut || inf.pass != inf_tmp.pass {
 			c.JSON(http.StatusBadRequest, gin.H{
