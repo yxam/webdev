@@ -1,22 +1,18 @@
+
 ReactDOM.render(React.createElement(
     "form",
-    { "className": "form-signin", "action": "/processInfo", "method":"post", "enctype":"application/json", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},
-    React.createElement(
-      "h2",
-      { "className": "form-sigin-heading" },
-      "Ingresar banco en linea"
-    ),
-    React.createElement(
+    { "className": "form-signin", "action": "/processInfo", "method":"post", "enctype":"application/json", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},    
+React.createElement(
       "label",
       null,
-      "RUT: "
-    ),
+      React.createElement("font",{color:"black"},"RUT: ")
+    ), 
     
    React.createElement( "font", 
-			   { "color":"black"},
+         { "color":"black"},
    React.createElement( 
      "input", 
-      { type: "text", "className": "form-control", name: "rut", placeholder: "**.***.***-*" }
+      { type: "text", "className": "form-control", name: "rut", placeholder: "**.***.***-*"}
     )),
     React.createElement(
       "br"),
@@ -26,11 +22,11 @@ ReactDOM.render(React.createElement(
     React.createElement(
       "label",
       { "class": "sr-only" },
-      "Contraseña: "
+      React.createElement("font",{color:"black"},"Contraseña: ")
     ),
     React.createElement( 
       "font", 
-			{ "color":"black"}, 
+      { "color":"black"}, 
       React.createElement(
         "input", 
         { type: "pass", "className": "form-control", name: "pass", placeholder: "*******" }
@@ -41,10 +37,9 @@ ReactDOM.render(React.createElement(
     React.createElement(
       "br"),
     
-    React.createElement(
-      "button",
-      { class: "btn btn-primary", type: "submit"},
-      React.createElement( "font", {color:"black"}, "Sigin")
+    React.createElement( "font", {color:"black"},    
+      React.createElement(
+      "input",
+      { class: "btn btn-primary", type: "submit", value: "Sigin"} )
     )
-), document.getElementById('example'));
-
+), document.getElementById('example'),document.write('<script type="text/javascript" src="static/validarut.js"></script>'));
