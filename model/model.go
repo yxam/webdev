@@ -30,13 +30,18 @@ func disconnect_db() {
 
 func init() {
 	connect_db()
-	query = "CREATE TABLE IF NOT EXISTS Cliente (
+	client_table := "CREATE TABLE IF NOT EXISTS Cliente (
 		rut	varchar(12) NOT NULL,
 		pass varchar(4) NOT NULL,
 		UNIQUE(rut),
 		PRIMARY KEY(rut)"
 		
-	_, err := db.Exec(query)
+	_, err := db.Exec(client_table)
+	if err != nil {
+		return log.Fatalf("Error creating table: %q", er)
+	}
+
+
 
 		
 
