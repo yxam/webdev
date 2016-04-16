@@ -1,5 +1,9 @@
 package main
 
+/*
+	Author: Maria Cristina Binfa
+*/
+
 import "github.com/lib/pq"
 
 var (
