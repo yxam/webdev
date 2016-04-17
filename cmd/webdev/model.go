@@ -6,9 +6,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
-    "fmt"
-    "github.com/lib/pq"
-	
+
 )
 
 var db *sql.DB = nil
@@ -17,6 +15,12 @@ var err error
 type information struct {
 	rut  string //`form:"rut"`// json:"rut" binding:"required"
 	pass string //`form:"pass"`// json:"pass" binding:"required"`
+}
+
+type account struct {
+	rut string
+	saldo int
+	tipo int
 }
 
 func connect_db() {
@@ -76,7 +80,7 @@ func login(client information) bool {
  
 }
 
-func account(client information) {
+func account(client information) account {
 	connect_db()
 	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.rut).Scan(&client.rut)
 	switch {
@@ -87,7 +91,12 @@ func account(client information) {
 			disconnect_db()
 			return nil
 		default:
+			account tmp
+			tmp.rut = row.rut
+			tmp.saldo = row.saldo
+			tmp.tipo = row.tipo
+			return tmp
 			disconnect_db()
-			return row
+			
 	}
 }
