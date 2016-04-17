@@ -91,7 +91,7 @@ func account(client information) account_s {
 			disconnect_db()
 			return nil
 		default:
-			account_s tmp
+			var tmp account_s
 			tmp.rut = row.rut
 			tmp.saldo = row.saldo
 			tmp.tipo = row.tipo
