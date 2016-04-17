@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
     "fmt"
+    "github.com/lib/pq"
 	
 )
 
