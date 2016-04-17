@@ -3,9 +3,15 @@
 	"GoVersion": "go1.6",
 	"GodepVersion": "v62",
 	"Packages": [
-		"./vendor"
+		"./..."
 	],
 	"Deps": [
+	    
+		{
+            "ImportPath": "github.com/gin-gonic/gin",
+            "Comment": "v1.0rc1-110-g4cc2de6",
+            "Rev": "4cc2de6207f4128624cbdd16be30f64966c67c08"
+        },
 		{
 			"ImportPath": "github.com/lib/pq",
 			"Comment": "go1.0-cutoff-84-g3cd0097",
