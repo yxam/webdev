@@ -86,10 +86,14 @@ func account(client information) account_s {
 	switch {
 		case row == sql.ErrNoRows:	
 			disconnect_db()
-			return nil
+			var tmp account_s
+			tmp = nil
+			return tmp
 		case row != nil:
 			disconnect_db()
-			return nil
+			var tmp account_s
+			tmp = nil
+			return tmp
 		default:
 			var tmp account_s
 			tmp.rut = row.rut
