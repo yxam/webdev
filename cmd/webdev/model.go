@@ -12,10 +12,7 @@ import (
 var db *sql.DB = nil
 var err error
 
-type information struct {
-	rut  string //`form:"rut"`// json:"rut" binding:"required"
-	pass string //`form:"pass"`// json:"pass" binding:"required"`
-}
+
 
 type account_s struct {
 	rut string
@@ -62,10 +59,8 @@ func init() {
 
 func login(client information) bool {
 	connect_db()
-	var nombre string
-	//sql=("SELECT * FROM Cliente WHERE rut=? AND pass=?") Nose si funciona pasandole aqui las variables
-	//var aux  para verificar si encontro o no a la persona, ya que si ejecuta la query aunque no encuentre nada retornara TRUE.
-	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&client)
+	tmp := new(information)
+	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&tmp)
     switch {
 	    case err == sql.ErrNoRows:
 	    	 disconnect_db()
@@ -80,26 +75,18 @@ func login(client information) bool {
  
 }
 
-func account(client information) account_s {
+func account(client information) *account_s {
 	connect_db()
-	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.rut).Scan(&client.rut)
+	tmp := new(account_s) 
+	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.rut).Scan(&tmp)
 	switch {
 		case row == sql.ErrNoRows:	
 			disconnect_db()
-			var tmp account_s
-			tmp = nil
-			return tmp
+			return nil
 		case row != nil:
 			disconnect_db()
-			var tmp account_s
-			tmp = nil
-			return tmp
+			return nil
 		default:
-			var tmp account_s
-			tmp.rut = row.rut
-			tmp.saldo = row.saldo
-			tmp.tipo = row.tipo
-			disconnect_db()
 			return tmp
 			
 	}

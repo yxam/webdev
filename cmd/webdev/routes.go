@@ -50,7 +50,7 @@ func processLogin(c *gin.Context) {
 	inf.pass = "1234"
 	
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
-		state = login(inf_tmp)
+		state := login(inf_tmp)
 		if state {
 			account := account(inf_tmp)
 			if account != nil {
@@ -59,7 +59,7 @@ func processLogin(c *gin.Context) {
 				c.JSON(http.StatusForbidden, gin.H{})
 			}
 		} else {
-				c.HTML(http.StatusBadRequest, "index.html", gin.H{"User and/or pass is invalid"})
+				c.HTML(http.StatusBadRequest, "index.html", gin.H{"message":"User and/or pass is invalid"})
 		}
 	} else {
 		c.AbortWithStatus(http.StatusNoContent) //Debe salirCREO
