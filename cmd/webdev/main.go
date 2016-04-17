@@ -37,7 +37,7 @@ func StartGin(port string){
 	router.Static("/static", "resources/static")
 	router.GET("/", index)
 	router.POST("/processLogin", processLogin)
-	modelutil.Init()
+	//modelutil.Init()
 	
 	if err := router.Run(":" + port); err != nil {
 		log.Printf("error listening on port " + port + ": %v", err)
