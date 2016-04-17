@@ -41,7 +41,7 @@ type response struct {
 	message string
 }
 
-func processInfo(c *gin.Context) {
+func processLogin(c *gin.Context) {
 	var inf information
 	var inf_tmp information
 	inf_tmp.rut = c.PostForm("rut")
@@ -50,27 +50,19 @@ func processInfo(c *gin.Context) {
 	inf.pass = "1234"
 	
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
-		var resp response //Esta estructura llevara las información total
-		if inf.rut != inf_tmp.rut || inf.pass != inf_tmp.pass {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"message":"nil", // nil = No logeado
-				})		
+		state = login(inf_tmp)
+		if state {
+			account := account(inf_tmp)
+			if account != nil {
+				c.JSON(http.StatusOK, account)
+			} else {
+				c.JSON(http.StatusForbidden, gin.H{})
+			}
+		} else {
+				c.HTML(http.StatusBadRequest, "index.html", gin.H{"User and/or pass is invalid"})
 		}
-		return
-		resp.message = "logeado"
-		resp.rut = inf_tmp.rut
-		resp.pass = inf_tmp.pass
-		/*
-			Aquí se procesa información necesaria
-
-		*/
-		c.JSON(200, gin.H{
-			"message":"logeado",
-			"rut":inf_tmp.rut,
-			"pass":inf_tmp.pass,
-			})
 	} else {
-		c.AbortWithStatus(http.StatusBadRequest) //Debe salirCREO
+		c.AbortWithStatus(http.StatusNoContent) //Debe salirCREO
 	}
 }
 

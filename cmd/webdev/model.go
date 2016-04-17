@@ -1,24 +1,30 @@
 package main
 
+// Farid Abulias
+
 import (
 	"database/sql"
 	"log"
 	"os"
-
-	"github.com/lib/pq"
+    "fmt"
+    "github.com/lib/pq"
+	
 )
 
-var (
-	db *sql.DB = nil
-	err error
-)
+var db *sql.DB = nil
+var err error
+
+type information struct {
+	rut  string //`form:"rut"`// json:"rut" binding:"required"
+	pass string //`form:"pass"`// json:"pass" binding:"required"`
+}
 
 func connect_db() {
 	db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
     if err != nil {
         log.Fatalf("Error opening database: %q", err)
     }
-    return db
+    
 }
 
 func disconnect_db() {
@@ -30,59 +36,58 @@ func disconnect_db() {
 
 func init() {
 	connect_db()
-	client_table := "CREATE TABLE IF NOT EXISTS Cliente (
-		rut	varchar(12),
-		pass varchar(4) NOT NULL,
-		PRIMARY KEY(rut)"
-	bank_table := "CREATE TABLE IF NOT EXISTS Banco (
-		id serial,
-		nombre varchar(50) NOT NULL,
-		PRIMARY KEY (id))"
+	var create []string
+	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
+	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
 	//serial = (int) auto_increment
-    cuenta_table := "CREATE TABLE IF NOT EXISTS Cuenta(
-    	id bigint,
-    	rut_cliente varchar(12) REFERENCES cliente(rut), 
-    	tipo text NOT NULL,
-    	saldo integer NOT NULL"
+    create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo integer NOT NULL, saldo integer NOT NULL"
     //id = numero de cuenta, por eso bigint y no serial que es auto incremental. 
-    transfer_table:="CREATE TABLE IF NOT EXISTS Transferencia(
-    	rut_origen varchar(12) REFERENCES cliente(rut),
-    	rut_destino varchar(12) NOT NULL,
-    	monto integer NOT NULL,
-    	fecha timestamp,
-    	PRIMARY KEY (rut_origen,fecha),
-    	)" 
+    create[3] ="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
     //timestamp, guarda fecha y hora
-
-    // Init client_table
-	_, err := db.Exec(client_table)
-	if err != nil {
-		return log.Fatalf("Error creating table 1: %q", er)
+    var length=cap(create)
+    i:=0
+    for i<length { 
+	    _, err := db.Exec(create[i])    
+	    if err != nil {
+	        log.Fatalf("Error creating table: %q", err)
+	    }
+	 i = i+1 
 	}
-	//Init bank table
-	_, err := db.Exec(bank_table)
-    if err != nil {
-		return log.Fatalf("Error creating table 2: %q", er)
-	}
-	//Init cuenta_table
-	_, err := db.Exec(cuenta_table)
-    if err != nil {
-		return log.Fatalf("Error creating table 3: %q", er)
-	}
-	//Init transfer_table
-	_, err := db.Exec(transfer_table)
-    if err != nil {
-		return log.Fatalf("Error creating table 4: %q", er)
-	}
-
 	disconnect_db()
 }
 
-func login(rut, pass string) {
+func login(client information) bool {
 	connect_db()
-	sql := "SELECT * FROM Cliente WHERE rut=? AND pass=?" //Nose si funciona pasandole aqui las variables
-	var aux // para verificar si encontro o no a la persona, ya que si ejecuta la query aunque no encuentre nada retornara TRUE.
-	_, aux := db.QueryRow(sql) //Sí no es así QueryRow("sql",rut, pass)
+	var nombre string
+	//sql=("SELECT * FROM Cliente WHERE rut=? AND pass=?") Nose si funciona pasandole aqui las variables
+	//var aux  para verificar si encontro o no a la persona, ya que si ejecuta la query aunque no encuentre nada retornara TRUE.
+	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&client)
+    switch {
+	    case err == sql.ErrNoRows:
+	    	 disconnect_db()
+	    	 return false
+	    case err != nil:
+	         disconnect_db()
+	         return false
+	    default
+	    	 disconnect_db()
+	    	 return true
+    }
+ 
+}
 
-	disconnect_db()
+func account(client information) {
+	connect_db()
+	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.rut).Scan(&client.rut)
+	switch {
+		case row == sql.ErrNoRows:	
+			disconnect_db()
+			return nil
+		case row != nil:
+			disconnect_db()
+			return nil
+		default:
+			disconnect_db()
+			return row
+	}
 }
