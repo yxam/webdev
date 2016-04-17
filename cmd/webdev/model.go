@@ -69,7 +69,7 @@ func login(client information) bool {
 	    case err != nil:
 	         disconnect_db()
 	         return false
-	    default
+	    default:
 	    	 disconnect_db()
 	    	 return true
     }
