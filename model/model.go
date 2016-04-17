@@ -6,7 +6,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
-
+    "fmt"
 	
 )
 
@@ -30,18 +30,22 @@ func disconnect_db() {
 
 func init() {
 	connect_db()
-	client_table := "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
-	bank_table := "CREATE TABLE IF NOT EXISTS Banco (id serial,	nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
+	var create []string
+	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
+	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial,	nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
 	//serial = (int) auto_increment
-    cuenta_table := "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo text NOT NULL,	saldo integer NOT NULL"
+    create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo text NOT NULL,	saldo integer NOT NULL"
     //id = numero de cuenta, por eso bigint y no serial que es auto incremental. 
-    transfer_table:="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
+    create[3] ="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
     //timestamp, guarda fecha y hora
-
-	_, err := db.Exec(client_table)
-    
-	if err != nil {
-	  log.Fatalf("Error creating table: %q", err)
+    var length=cap(create)
+    i:=0
+    for i<length{ 
+	    _, err := db.Exec(create[i])    
+	    if err != nil {
+	        log.Fatalf("Error creating table: %q", err)
+	    }
+	 i = i+1 
 	}
     
 
@@ -53,9 +57,17 @@ func init() {
 
 func login(rut, pass string) {
 	connect_db()
+	var nombre string
 	//sql=("SELECT * FROM Cliente WHERE rut=? AND pass=?") Nose si funciona pasandole aqui las variables
 	//var aux  para verificar si encontro o no a la persona, ya que si ejecuta la query aunque no encuentre nada retornara TRUE.
-	aux := db.QueryRow("SELECT * FROM Cliente WHERE rut=? AND pass=?",rut,pass) //Sí no es así QueryRow("sql",rut, pass)
-
-
+	aux := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?",rut,pass).Scan(&nombre) //Sí no es así QueryRow("sql",rut, pass)
+    switch {
+    case aux==sql.ErrNoRows:
+    	 log.Printf("No user")
+    case aux!=nil:
+         log.Fatal(aux)
+    default:
+    	 fmt.Printf("User: %s", nombre)
+    }
+ 
 }
