@@ -48,4 +48,3 @@ func processLogin(c *gin.Context) {
 	}
 }
 
-
