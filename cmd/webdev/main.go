@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	
+	"webdev/cmd/webdev/modelutil"
 	"github.com/gin-gonic/gin"
 )
 
@@ -32,9 +33,9 @@ func StartGin(port string){
 	gin.SetMode(gin.ReleaseMode)
 
 	router := gin.New()
+	modelutil.Init()
 	router.LoadHTMLGlob("resources/*.html")
 	router.Static("/static", "resources/static")
-	init()
 	router.GET("/", index)
 	router.POST("/processLogin", processLogin)
 	

@@ -1,4 +1,4 @@
-package main
+package modelutil
 
 // Farid Abulias
 
@@ -12,7 +12,10 @@ import (
 var db *sql.DB = nil
 var err error
 
-
+type Information struct {
+	Rut  string //`form:"rut"`// json:"rut" binding:"required"
+	Pass string //`form:"pass"`// json:"pass" binding:"required"`
+}
 
 type account_s struct {
 	rut string
@@ -35,7 +38,7 @@ func disconnect_db() {
 	}
 }
 
-func init() {
+func Init() {
 	connect_db()
 	var create []string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
@@ -57,9 +60,9 @@ func init() {
 	disconnect_db()
 }
 
-func login(client information) bool {
+func Login(client Information) bool {
 	connect_db()
-	tmp := new(information)
+	tmp := new(Information)
 	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&tmp)
     switch {
 	    case err == sql.ErrNoRows:
@@ -75,10 +78,10 @@ func login(client information) bool {
  
 }
 
-func account(client information) *account_s {
+func Account(client Information) *account_s {
 	connect_db()
 	tmp := new(account_s) 
-	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.rut).Scan(&tmp)
+	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.Rut).Scan(&tmp)
 	switch {
 		case row == sql.ErrNoRows:	
 			disconnect_db()
