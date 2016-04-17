@@ -17,7 +17,7 @@ type information struct {
 	pass string //`form:"pass"`// json:"pass" binding:"required"`
 }
 
-type account struct {
+type account_s struct {
 	rut string
 	saldo int
 	tipo int
@@ -80,7 +80,7 @@ func login(client information) bool {
  
 }
 
-func account(client information) account {
+func account(client information) account_s {
 	connect_db()
 	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.rut).Scan(&client.rut)
 	switch {
@@ -91,12 +91,12 @@ func account(client information) account {
 			disconnect_db()
 			return nil
 		default:
-			account tmp
+			account_s tmp
 			tmp.rut = row.rut
 			tmp.saldo = row.saldo
 			tmp.tipo = row.tipo
-			return tmp
 			disconnect_db()
+			return tmp
 			
 	}
 }
