@@ -24,7 +24,6 @@ type response struct {
 }
 
 func processLogin(c *gin.Context) {
-	var inf information
 	var inf_tmp modelutil.Information
 	inf_tmp.Rut = c.PostForm("rut")
 	inf_tmp.Pass = c.PostForm("pass")
