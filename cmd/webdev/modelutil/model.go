@@ -62,7 +62,10 @@ func Init() bool {
 	    }
 	    i++
 	}
-	disconnect_db()
+	err = db.Close()
+	if err != nil {
+		log.Fatalf("Error closing database: %q", err)
+	}
 	return true
 }
 
