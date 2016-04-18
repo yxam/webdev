@@ -49,6 +49,6 @@ func createdb(c *gin.Context) {
 	if modelutil.Init() {
 		c.JSON(http.StatusOK, gin.H{"message":"database created!"})
 	} else {
-		c.JSON(http.StatusBadRequest, gin.H{"message":"database was created previously"})
+		c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})
 	}
 }
