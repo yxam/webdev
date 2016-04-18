@@ -38,7 +38,7 @@ func disconnect_db() {
 	}
 }
 
-func Init() {
+func Init() bool {
 	connect_db()
 	var create []string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
@@ -48,16 +48,17 @@ func Init() {
     //id = numero de cuenta, por eso bigint y no serial que es auto incremental. 
     create[3] ="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
     //timestamp, guarda fecha y hora
-    var length=cap(create)
-    i:=0
-    for i<length { 
-	    _, err := db.Exec(create[i])    
+    var length = cap(create)
+    i := 0
+    for i < length { 
+	    _, err := db.Exec(create[i++])    
 	    if err != nil {
-	        log.Fatalf("Error creating table: %q", err)
+			disconnect_db()
+	        return nil
 	    }
-	 i = i+1 
 	}
 	disconnect_db()
+	return true
 }
 
 func Login(client Information) bool {

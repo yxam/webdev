@@ -28,8 +28,6 @@ func processLogin(c *gin.Context) {
 	var inf_tmp modelutil.Information
 	inf_tmp.Rut = c.PostForm("rut")
 	inf_tmp.Pass = c.PostForm("pass")
-	inf.rut = "10100100-1"
-	inf.pass = "1234"
 	
 	if inf_tmp.Rut != "" && inf_tmp.Pass != "" {
 		state := modelutil.Login(inf_tmp)
@@ -48,3 +46,10 @@ func processLogin(c *gin.Context) {
 	}
 }
 
+func createdb(c *gin.Context) {
+	if modelutil.Init() {
+		c.JSON(http.StatusOK, "message":"database created!")
+	} else {
+		c.JSON(http.StatusBadRequest, "message":"database was created previously")
+	}
+}
