@@ -25,7 +25,7 @@ func main() {
 //
 //func StartWorkers() {
 //	go statsWorker()
-//}
+//}/
 
 func StartGin(port string){
 	gin.SetMode(gin.ReleaseMode)
