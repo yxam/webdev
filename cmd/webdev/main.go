@@ -18,15 +18,6 @@ func main() {
 	StartGin(port)
 }
 
-//func ConfigRuntime() {
-//	nuCPU := runtime.NumCPU()
-//	runtime.GOMAXPROCS(nuCPU)
-//}
-//
-//func StartWorkers() {
-//	go statsWorker()
-//}
-
 func StartGin(port string){
 	gin.SetMode(gin.ReleaseMode)
 
