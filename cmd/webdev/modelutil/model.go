@@ -57,12 +57,12 @@ func Init() bool {
     for i < length { 
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
-			defer disconnect_db()
+			disconnect_db()
 	        return false
 	    }
 	    i++
 	}
-	defer disconnect_db()
+	disconnect_db()
 	return true
 }
 
