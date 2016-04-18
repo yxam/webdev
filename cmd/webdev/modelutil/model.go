@@ -13,7 +13,7 @@ var db *sql.DB = nil
 var err error
 
 type Information struct {
-	Rut  string //`form:"rut"`// json:"rut" binding:"required"
+	Rut  string 
 	Pass string //`form:"pass"`// json:"pass" binding:"required"`
 }
 
