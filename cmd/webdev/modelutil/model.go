@@ -54,7 +54,7 @@ func Init() bool {
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
 			disconnect_db()
-	        return nil
+	        return false
 	    }
 	    i++
 	}
