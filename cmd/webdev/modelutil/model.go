@@ -51,11 +51,12 @@ func Init() bool {
     var length = cap(create)
     i := 0
     for i < length { 
-	    _, err := db.Exec(create[i++])    
+	    _, err := db.Exec(create[i])    
 	    if err != nil {
 			disconnect_db()
 	        return nil
 	    }
+	    i++
 	}
 	disconnect_db()
 	return true
