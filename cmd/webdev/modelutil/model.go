@@ -54,12 +54,12 @@ func Init() bool {
     for i < length { 
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
-			disconnect_db()
+			defer disconnect_db()
 	        return false
 	    }
 	    i++
 	}
-	disconnect_db()
+	defer disconnect_db()
 	return true
 }
 
@@ -69,13 +69,13 @@ func Login(client Information) bool {
 	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&tmp)
     switch {
 	    case err == sql.ErrNoRows:
-	    	 disconnect_db()
+	    	 defer disconnect_db()
 	    	 return false
 	    case err != nil:
-	         disconnect_db()
+	         defer disconnect_db()
 	         return false
 	    default:
-	    	 disconnect_db()
+	    	 defer disconnect_db()
 	    	 return true
     }
  
@@ -87,10 +87,10 @@ func Account(client Information) *account_s {
 	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.Rut).Scan(&tmp)
 	switch {
 		case row == sql.ErrNoRows:	
-			disconnect_db()
+			defer disconnect_db()
 			return nil
 		case row != nil:
-			disconnect_db()
+			defer disconnect_db()
 			return nil
 		default:
 			return tmp
