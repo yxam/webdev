@@ -29,7 +29,7 @@ func processLogin(c *gin.Context) {
 	inf_tmp.Pass = c.PostForm("pass")
 	
 	if inf_tmp.Rut != "" && inf_tmp.Pass != "" {
-		state := modelutil.Login(inf_tmp)
+		state := modelutil.Login(inf_tmp
 		if state {
 			account := modelutil.Account(inf_tmp)
 			if account != nil {
@@ -53,7 +53,7 @@ func createdb(c *gin.Context) {
 	}
 }
 
-func 
+
 
 
 
