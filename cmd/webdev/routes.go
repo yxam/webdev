@@ -52,3 +52,8 @@ func createdb(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})
 	}
 }
+
+func 
+
+
+
