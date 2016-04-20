@@ -75,12 +75,6 @@ func createdb(c *gin.Context) {
 	}
 	db.Close()
 	c.JSON(http.StatusOK, gin.H{"message":"database created!"})
-	//---------------
-	if flag {
-		c.JSON(http.StatusOK, gin.H{"message":"database created!"})
-	} else {
-		c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})
-	}
 }
 
 
