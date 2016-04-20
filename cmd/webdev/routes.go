@@ -61,6 +61,7 @@ func marii(c *gin.Context) {
 	db, err := sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
 	if err != nil {
 		c.JSON(400, gin.H{"Chupalo":"maxi"})
+	}
 	defer db.Close()
 
 	var numerosaldo float64
