@@ -42,7 +42,7 @@ func disconnect_db() {
 func Init() bool {
 	db, err = sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
     if err != nil {
-        log.Fatalf("Error opening database: %q", err)
+        return false
     }
 	defer db.Close()
     
@@ -63,9 +63,6 @@ func Init() bool {
 	        return false
 	    }
 	    i++
-	}
-	if err != nil {
-		log.Fatalf("Error closing database: %q", err)
 	}
 	return true
 }
