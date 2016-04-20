@@ -62,7 +62,7 @@ func createdb(c *gin.Context) {
     //id = numero de cuenta, por eso bigint y no serial que es auto incremental. 
     create[3] ="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
     //timestamp, guarda fecha y hora
-    var length = cap(create)
+    var length = 4
     i := 0
     for i < length { 
 	    _, err := db.Exec(create[i])    
