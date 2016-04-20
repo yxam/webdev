@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	_"github.com/lib/pq"
+	_ "github.com/lib/pq"
 )
 
 var db *sql.DB = nil
