@@ -56,7 +56,7 @@ func createdb(c *gin.Context) {
 
 
 func marii(c *gin.Context) {
-	func Saldo(){
+
 	db, err := sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
 	if err != nil {
 		log.Println(err)}
@@ -73,7 +73,7 @@ func marii(c *gin.Context) {
 		c.JSON(400, gin.H{"Message":"Aprovecha AWEONAO"})
 	}
 	c.JSON(200, gin.H{"Message":"WENA MACCCCC"})
-}
 
+}
 
 
