@@ -1,7 +1,7 @@
 
 ReactDOM.render(React.createElement(
     "form",
-    { "className": "form-signin", "action": "processLogin", "method":"post", "enctype":"application/json", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},    
+    { "className": "login-form", "action": "processLogin", "method":"post", "enctype":"application/json", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},    
 React.createElement(
       "label",
       null,
@@ -39,7 +39,8 @@ React.createElement(
     
     React.createElement( "font", {color:"black"},    
       React.createElement(
-      "input",
-      { className: "btn btn-primary", type: "submit", value: "Sigin"} )
+      "button",
+      {  type: "submit"},
+      "Sigin" )
     )
 ), document.getElementById('example'),document.write('<script type="text/javascript" src="static/validarut.js"></script>'));
