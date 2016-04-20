@@ -49,9 +49,9 @@ func createdb(c *gin.Context) {
 	
 	db, err := sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
 	if err != nil {
-		db.Close()
-			c.JSON(http.StatusInternalServerError, gin.H{"message":"No open database"})
+		c.JSON(http.StatusInternalServerError, gin.H{"message":"No open database"})
 	}
+	defer db.Close()
 	
 
     var create []string
@@ -68,12 +68,10 @@ func createdb(c *gin.Context) {
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
 			//disconnect_db()
-	        db.Close()
-			c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})	
+	 		c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})	
 		}
 	    i++
 	}
-	db.Close()
 	c.JSON(http.StatusOK, gin.H{"message":"database created!"})
 }
 
