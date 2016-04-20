@@ -73,7 +73,7 @@ func marii(c *gin.Context) {
 	if err != nil && err !=sql.ErrNoRows {
 		c.JSON(400, gin.H{"Message":"Aprovecha AWEONAO"})
 	}
-	c.JSON(200, gin.H{"Message":"WENA MACCCCC"})
+	c.JSON(200, gin.H{"Message":numerosaldo})
 
 }
 
