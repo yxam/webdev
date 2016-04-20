@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"webdev/cmd/webdev/modelutil"
+	"database/sql"
 
 	"github.com/gin-gonic/gin"
 )
@@ -46,7 +47,8 @@ func processLogin(c *gin.Context) {
 }
 
 func createdb(c *gin.Context) {
-	if modelutil.Init() {
+	flag := modelutil.Init()
+	if flag {
 		c.JSON(http.StatusOK, gin.H{"message":"database created!"})
 	} else {
 		c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})
@@ -54,6 +56,25 @@ func createdb(c *gin.Context) {
 }
 
 
+func marii(c *gin.Context) {
 
+	db, err := sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
+	if err != nil {
+		c.JSON(400, gin.H{"Chupalo":"maxi"})
+	}
+	defer db.Close()
+
+	var numerosaldo float64
+	var rut string
+	
+	rut = "123"
+
+	err = db.QueryRow("select saldo from cuenta where cuenta.rut_cliente=$1",rut).Scan(&numerosaldo)
+	if err != nil && err !=sql.ErrNoRows {
+		c.JSON(400, gin.H{"Message":"Aprovecha AWEONAO"})
+	}
+	c.JSON(200, gin.H{"Message":numerosaldo})
+
+}
 
 

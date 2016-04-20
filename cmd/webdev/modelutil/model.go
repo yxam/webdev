@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	_"github.com/lib/pq"
+	_ "github.com/lib/pq"
 )
 
 var db *sql.DB = nil
@@ -40,10 +40,12 @@ func disconnect_db() {
 }
 
 func Init() bool {
-	db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	db, err = sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
     if err != nil {
         log.Fatalf("Error opening database: %q", err)
     }
+	defer db.Close()
+    
     var create []string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
 	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
@@ -57,12 +59,11 @@ func Init() bool {
     for i < length { 
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
-			disconnect_db()
+			//disconnect_db()
 	        return false
 	    }
 	    i++
 	}
-	err = db.Close()
 	if err != nil {
 		log.Fatalf("Error closing database: %q", err)
 	}
