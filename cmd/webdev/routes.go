@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"webdev/cmd/webdev/modelutil"
 	"database/sql"
 
 	"github.com/gin-gonic/gin"
@@ -47,7 +46,7 @@ func processLogin(c *gin.Context) {
 }
 
 func createdb(c *gin.Context) {
-	flag := modelutil.Init()
+	flag := Init()
 	if flag {
 		c.JSON(http.StatusOK, gin.H{"message":"database created!"})
 	} else {
