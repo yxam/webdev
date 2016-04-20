@@ -44,6 +44,7 @@ func Init() bool {
     if err != nil {
         log.Fatalf("Error opening database: %q", err)
     }
+    
     var create []string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
 	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
