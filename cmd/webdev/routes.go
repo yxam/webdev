@@ -75,7 +75,7 @@ func createdb(c *gin.Context) {
 //	    }
 //	    i++
 //	}
-	_, err := create.Exec()
+	_, err = create.Exec()
 	if err != nil {
 		c.JSON(http.StatusForbidden, gin.H{"Message":"Error ejecutando consulta"})
 	}
