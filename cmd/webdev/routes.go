@@ -79,6 +79,7 @@ func createdb(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusForbidden, gin.H{"Message":"Error ejecutando consulta"})
 	}
+	c.JSON(http.StatusOK, gin.H{ "Chupalo":"MAXI"})
 	//db.Close()
 	//return true
 //
