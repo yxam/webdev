@@ -44,6 +44,7 @@ func Init() bool {
     if err != nil {
         log.Fatalf("Error opening database: %q", err)
     }
+	defer db.Close()
     
     var create []string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
@@ -58,12 +59,11 @@ func Init() bool {
     for i < length { 
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
-			disconnect_db()
+			//disconnect_db()
 	        return false
 	    }
 	    i++
 	}
-	err = db.Close()
 	if err != nil {
 		log.Fatalf("Error closing database: %q", err)
 	}
