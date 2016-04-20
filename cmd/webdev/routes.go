@@ -2,7 +2,7 @@ package main
 
 import (
 	"net/http"
-	"webdev/cmd/webdev/modelutil"
+	"github.com/webdev/modelutil"
 
 	"github.com/gin-gonic/gin"
 )
