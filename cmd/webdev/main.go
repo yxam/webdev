@@ -25,6 +25,7 @@ func StartGin(port string){
 	router.LoadHTMLGlob("resources/*.html")
 	router.Static("/static", "resources/static")
 	router.GET("/", index)
+	router.GET("/marii", marii)
 	router.GET("/createdb", createdb)
 	router.POST("/processLogin", processLogin)
 	
