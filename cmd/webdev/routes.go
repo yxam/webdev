@@ -65,9 +65,9 @@ func marii(c *gin.Context) {
 	defer db.Close()
 
 	var numerosaldo float64
-	var rut int
+	var rut string
 	
-	rut = 123
+	rut = "123"
 
 	err = db.QueryRow("select saldo from cuenta where cuenta.rut_cliente=$1",rut).Scan(&numerosaldo)
 	if err != nil && err !=sql.ErrNoRows {
