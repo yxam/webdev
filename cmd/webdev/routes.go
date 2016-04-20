@@ -50,11 +50,10 @@ func createdb(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"Message":"Error en la db"})
 	}
-	defer db.Close()
-
+	
     //var create []string
 	//
-	create, err := db.Prepare("CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL, PRIMARY KEY(rut))")
+	create, err := db.Prepare("CREATE TABLE IF NOT EXISTS HOLA (rut varchar(12), pass varchar(4) NOT NULL, PRIMARY KEY(rut))")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"Message":"Error creando tabla"})
 	}
@@ -89,6 +88,8 @@ func createdb(c *gin.Context) {
 //	//} else {
 //	//	c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})
 	//}
+	defer db.Close()
+
 }
 
 
