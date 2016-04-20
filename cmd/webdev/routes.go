@@ -46,7 +46,36 @@ func processLogin(c *gin.Context) {
 }
 
 func createdb(c *gin.Context) {
-	flag := Init()
+	
+	db, err := sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
+	if err != nil {
+		db.Close()
+			c.JSON(http.StatusInternalServerError, gin.H{"message":"No open database"})
+	}
+	
+
+    var create []string
+	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
+	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
+	//serial = (int) auto_increment
+    create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo integer NOT NULL, saldo integer NOT NULL"
+    //id = numero de cuenta, por eso bigint y no serial que es auto incremental. 
+    create[3] ="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
+    //timestamp, guarda fecha y hora
+    var length = cap(create)
+    i := 0
+    for i < length { 
+	    _, err := db.Exec(create[i])    
+	    if err != nil {
+			//disconnect_db()
+	        db.Close()
+			c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})	
+		}
+	    i++
+	}
+	db.Close()
+	c.JSON(http.StatusOK, gin.H{"message":"database created!"})
+	//---------------
 	if flag {
 		c.JSON(http.StatusOK, gin.H{"message":"database created!"})
 	} else {
