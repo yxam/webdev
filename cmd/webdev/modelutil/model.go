@@ -64,11 +64,11 @@ func Init() bool {
 	    }
 	    i++
 	}
-	
+
 	return true
 }
 
-func Login(client Information) bool {
+func Login(rut, pass string) bool {
 	connect_db()
 	tmp := new(Information)
 	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&tmp)
