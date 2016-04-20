@@ -1,4 +1,4 @@
-package main
+package modelutil
 
 // Farid Abulias
 
@@ -40,13 +40,12 @@ func disconnect_db() {
 }
 
 func Init() bool {
-	db, err := sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
-	if err != nil {
-		db.Close()
-		return false
-	}
-	
-
+	db, err = sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
+    if err != nil {
+        return false
+    }
+	defer db.Close()
+    
     var create []string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut)"
 	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
@@ -61,19 +60,18 @@ func Init() bool {
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
 			//disconnect_db()
-	        db.Close()
 	        return false
 	    }
 	    i++
 	}
-	db.Close()
+	
 	return true
 }
 
-func Login(rut, pass string) bool {
+func Login(client Information) bool {
 	connect_db()
 	tmp := new(Information)
-	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", rut, pass).Scan(&tmp)
+	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&tmp)
     switch {
 	    case err == sql.ErrNoRows:
 	    	 defer disconnect_db()
