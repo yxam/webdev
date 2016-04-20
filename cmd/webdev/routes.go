@@ -46,7 +46,8 @@ func processLogin(c *gin.Context) {
 }
 
 func createdb(c *gin.Context) {
-	if modelutil.Init() {
+	flag := modelutil.Init()
+	if flag {
 		c.JSON(http.StatusOK, gin.H{"message":"database created!"})
 	} else {
 		c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})
