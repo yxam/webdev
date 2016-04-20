@@ -24,14 +24,14 @@ type response struct {
 }
 
 func processLogin(c *gin.Context) {
-	var inf_tmp modelutil.Information
+	var inf_tmp Information
 	inf_tmp.Rut = c.PostForm("rut")
 	inf_tmp.Pass = c.PostForm("pass")
 	
 	if inf_tmp.Rut != "" && inf_tmp.Pass != "" {
-		state := modelutil.Login(inf_tmp.Rut, inf_tmp.Pass)
+		state := Login(inf_tmp.Rut, inf_tmp.Pass)
 		if state {
-			account := modelutil.Account(inf_tmp)
+			account := Account(inf_tmp)
 			if account != nil {
 				c.JSON(http.StatusOK, account)
 			} else {
@@ -54,7 +54,7 @@ func createdb(c *gin.Context) {
 
     //var create []string
 	//
-	create, err = db.Prepare("CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL, PRIMARY KEY(rut)")
+	create, err := db.Prepare("CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL, PRIMARY KEY(rut)")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"Message":"Error creando tabla"})
 	}
