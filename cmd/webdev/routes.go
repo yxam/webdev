@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"webdev/cmd/webdev/modelutil"
 	"database/sql"
 	"webdev/cmd/webdev/modelutil"
 
@@ -26,7 +25,6 @@ type response struct {
 }
 
 func processLogin(c *gin.Context) {
-<<<<<<< HEAD
 	var inf_tmp information
 	inf_tmp.rut = c.PostForm("rut")
 	inf_tmp.pass = c.PostForm("pass")
@@ -35,16 +33,6 @@ func processLogin(c *gin.Context) {
 		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
 		if state {
 			account := modelutil.Account(inf_tmp.rut)
-=======
-	var inf_tmp modelutil.Information
-	inf_tmp.Rut = c.PostForm("rut")
-	inf_tmp.Pass = c.PostForm("pass")
-	
-	if inf_tmp.Rut != "" && inf_tmp.Pass != "" {
-		state := modelutil.Login(inf_tmp.Rut)
-		if state {
-			account := modelutil.Account(inf_tmp)
->>>>>>> e9c67ed45d7ea15213d21eb05718d6947ffdfe71
 			if account != nil {
 				c.JSON(http.StatusOK, account)
 			} else {
@@ -61,7 +49,6 @@ func processLogin(c *gin.Context) {
 func createdb(c *gin.Context) {
 	flag := modelutil.Init()
 	if flag {
-<<<<<<< HEAD
 		c.JSON(http.StatusOK, gin.H{"M":"Database create"})
 	} else {
 		c.JSON(http.StatusInternalServerError,gin.H{"M":"Database was created"})
@@ -114,13 +101,6 @@ func createdb(c *gin.Context) {
 //	defer db.Close()
 //
 //}
-=======
-		c.JSON(http.StatusOK, gin.H{"message":"database created!"})
-	} else {
-		c.JSON(http.StatusInternalServerError, gin.H{"message":"database was created previously"})
-	}
-}
->>>>>>> e9c67ed45d7ea15213d21eb05718d6947ffdfe71
 
 
 func marii(c *gin.Context) {

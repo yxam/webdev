@@ -1,9 +1,4 @@
 package modelutil
-<<<<<<< HEAD:cmd/webdev/modelutil/model.go
-=======
-
-// Farid Abulias
->>>>>>> e9c67ed45d7ea15213d21eb05718d6947ffdfe71:cmd/webdev/modelutil/model.go
 
 import (
 	"database/sql"
@@ -43,16 +38,7 @@ func disconnect_db() {
 }
 
 func Init() bool {
-<<<<<<< HEAD:cmd/webdev/modelutil/model.go
 	connect_db()
-=======
-	db, err = sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
-    if err != nil {
-        return false
-    }
-	defer db.Close()
-    
->>>>>>> e9c67ed45d7ea15213d21eb05718d6947ffdfe71:cmd/webdev/modelutil/model.go
     var create []string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut))"
 	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
@@ -67,26 +53,19 @@ func Init() bool {
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
 			//disconnect_db()
-<<<<<<< HEAD:cmd/webdev/modelutil/model.go
 	        disconnect_db()
-=======
->>>>>>> e9c67ed45d7ea15213d21eb05718d6947ffdfe71:cmd/webdev/modelutil/model.go
 	        return false
 	    }
 	    i++
 	}
-<<<<<<< HEAD:cmd/webdev/modelutil/model.go
 	disconnect_db()
-=======
-	
->>>>>>> e9c67ed45d7ea15213d21eb05718d6947ffdfe71:cmd/webdev/modelutil/model.go
 	return true
 }
 
-func Login(client Information) bool {
+func Login(rut, pass string) bool {
 	connect_db()
 	tmp := new(Information)
-	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&tmp)
+	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", rut, pass).Scan(&tmp)
     switch {
 	    case err == sql.ErrNoRows:
 	    	 defer disconnect_db()
