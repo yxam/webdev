@@ -38,7 +38,7 @@ func disconnect_db() {
 
 func Init() bool {
 	connect_db()
-    var create []string
+    var create [4]string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut))"
 	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
 	//serial = (int) auto_increment
