@@ -80,10 +80,10 @@ func Login(rut, pass string) bool {
  
 }
 
-func Account(client Information) *account_s {
+func Account(rut string) *account_s {
 	connect_db()
 	tmp := new(account_s) 
-	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", client.Rut).Scan(&tmp)
+	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", rut).Scan(&tmp)
 	switch {
 		case row == sql.ErrNoRows:	
 			defer disconnect_db()

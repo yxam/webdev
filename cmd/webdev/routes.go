@@ -25,14 +25,14 @@ type response struct {
 }
 
 func processLogin(c *gin.Context) {
-	var inf_tmp Information
-	inf_tmp.Rut = c.PostForm("rut")
-	inf_tmp.Pass = c.PostForm("pass")
+	var inf_tmp information
+	inf_tmp.rut = c.PostForm("rut")
+	inf_tmp.pass = c.PostForm("pass")
 	
-	if inf_tmp.Rut != "" && inf_tmp.Pass != "" {
-		state := modelutil.Login(inf_tmp.Rut, inf_tmp.Pass)
+	if inf_tmp.rut != "" && inf_tmp.pass != "" {
+		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
 		if state {
-			account := modelutil.Account(inf_tmp)
+			account := modelutil.Account(inf_tmp.rut)
 			if account != nil {
 				c.JSON(http.StatusOK, account)
 			} else {
@@ -49,9 +49,9 @@ func processLogin(c *gin.Context) {
 func createdb(c *gin.Context) {
 	flag := modelutil.Init()
 	if flag {
-		c.JSON(http.StatusOK, "M":"Database create")
+		c.JSON(http.StatusOK, gin.H{"M":"Database create"})
 	} else {
-		c.JSON(http.StatusInternalServerError,"M":"Database was created")
+		c.JSON(http.StatusInternalServerError,gin.H{"M":"Database was created"})
 	}
 }
 
