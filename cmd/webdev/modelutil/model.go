@@ -39,20 +39,17 @@ func disconnect_db() {
 
 func Init() bool {
 	connect_db()
+    
     var create [4]string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut))"
 	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
-	//serial = (int) auto_increment
-    create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo integer NOT NULL, saldo integer NOT NULL)"
-    //id = numero de cuenta, por eso bigint y no serial que es auto incremental. 
+	create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo integer NOT NULL, saldo integer NOT NULL)"
     create[3] ="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
-    //timestamp, guarda fecha y hora
     var length = cap(create)
     i := 0
     for i < length { 
 	    _, err := db.Exec(create[i])    
 	    if err != nil {
-			//disconnect_db()
 	        disconnect_db()
 	        return false
 	    }
@@ -66,33 +63,28 @@ func Login(rut, pass string) bool {
 	connect_db()
 	tmp := new(Information)
 	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", rut, pass).Scan(&tmp)
+    disconnect_db()
     switch {
 	    case err == sql.ErrNoRows:
-	    	 defer disconnect_db()
 	    	 return false
 	    case err != nil:
-	         defer disconnect_db()
 	         return false
 	    default:
-	    	 defer disconnect_db()
 	    	 return true
     }
- 
 }
 
 func Account(rut string) *account_s {
 	connect_db()
 	tmp := new(account_s) 
 	row := db.QueryRow("SELECT * FROM Cuenta WHERE Cuenta.rut == ?", rut).Scan(&tmp)
+	disconnect_db()
 	switch {
 		case row == sql.ErrNoRows:	
-			defer disconnect_db()
 			return nil
 		case row != nil:
-			defer disconnect_db()
 			return nil
 		default:
 			return tmp
-			
 	}
 }
