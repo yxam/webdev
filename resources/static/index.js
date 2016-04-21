@@ -1,7 +1,7 @@
 
 ReactDOM.render(React.createElement(
     "form",
-    { "className": "login-form", "action": "processLogin", "method":"post", "enctype":"application/json", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},    
+    { "className": "login-form", "action": "processLogin", "method":"post", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},    
 React.createElement(
       "label",
       null,
