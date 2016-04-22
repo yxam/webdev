@@ -52,5 +52,5 @@ func TestProcessLoginParametrosValidosIncorrectos(t *testing.T) {
 		QueryString: item,
 	}.Do()
 	log.Print("- StatusCode -> " + strconv.Itoa(res.StatusCode))
-	//if res.Uri !=
+	
 }
