@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"log"
 	//"os"
-
 	_ "github.com/lib/pq"
 )
 
@@ -62,13 +61,17 @@ func Init() bool {
 
 func Login(rut, pass string) bool {
 	connect_db()
-	_, err := db.Query("SELECT * FROM Cliente WHERE rut=$1 AND pass=$2", rut, pass)
-    disconnect_db()
-    if err != nil {
-    	return false
-    } else {
-    	return true
-    }
+	var tmp string
+	err := db.QueryRow("SELECT pass FROM cliente WHERE rut=$1 AND pass=$2", rut, pass).Scan(&tmp)
+	defer disconnect_db()
+	switch {
+		case err == sql.ErrNoRows:	
+			return false
+		case err != nil:
+			return false
+		default:
+			return true
+	}
 }
 
 func Account(rut string) *account_s {
