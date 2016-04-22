@@ -39,13 +39,13 @@ func processLogin(c *gin.Context) {
 			if account != nil {
 				c.JSON(http.StatusOK, account)
 			} else {
-				c.JSON(http.StatusForbidden, gin.H{})
+				c.JSON(http.StatusForbidden, gin.H{"StatusCode":http.StatusInternalServerError})
 			}
 		} else {
-				c.HTML(http.StatusBadRequest, "index.html", gin.H{"message":"User and/or pass is invalid"})
+				c.Redirect(http.StatusMovedPermanently, "index.html")
 		}
 	} else {
-		c.AbortWithStatus(http.StatusNoContent) //Debe salirCREO
+		c.Redirect(http.BadRequest, "index.html") //Debe salirCREO
 	}
 }
 
