@@ -61,7 +61,7 @@ func Init() bool {
 
 func Login(rut, pass string) bool {
 	connect_db()
-	_, err := db.Query("SELECT nombre FROM Cliente WHERE rut=$1 AND pass=$2", rut, pass)
+	_, err := db.Query("SELECT * FROM Cliente WHERE rut=$1 AND pass=$2", rut, pass)
     disconnect_db()
     switch {
 	    case err == sql.ErrNoRows:
