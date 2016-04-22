@@ -59,10 +59,10 @@ func Init() bool {
 	return true
 }
 
-func Login(rut, pass string) bool {
+func Login(client Information) bool {
 	connect_db()
-	tmp := new(Information)
-	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", rut, pass).Scan(&tmp)
+	tmp := Information
+	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", client).Scan(&tmp)
     disconnect_db()
     switch {
 	    case err == sql.ErrNoRows:
