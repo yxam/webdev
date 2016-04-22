@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"webdev/cmd/webdev/modelutil"
 	"strconv"
+	"log"
 
 	"github.com/gin-gonic/gin"
 )
