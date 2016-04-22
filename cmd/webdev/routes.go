@@ -45,7 +45,7 @@ func processLogin(c *gin.Context) {
 				c.Redirect(http.StatusMovedPermanently, "http://www.google.com")
 		}
 	} else {
-		c.Redirect(http.BadRequest, "http://www.google.com") //Debe salirCREO
+		c.Redirect(http.StatusBadRequest, "http://www.google.com") //Debe salirCREO
 	}
 }
 
