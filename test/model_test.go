@@ -16,11 +16,7 @@ func TestInit(t *testing.T) {
 
 //Max
 func TestLogin(t *testing.T) {
-    var rut string
-    var pass string
-    rut = "10100100-1"
-    pass = "0000"
-    res := modelutil.Login(rut, pass)
+    res := modelutil.Login("10100100-1", "0000")
     if res == false {
     	t.Error("La cuenta si existe")
     }
