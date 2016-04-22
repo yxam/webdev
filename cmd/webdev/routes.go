@@ -29,6 +29,7 @@ func processLogin(c *gin.Context) {
 	var inf_tmp information
 	inf_tmp.rut = c.PostForm("rut")
 	inf_tmp.pass = c.PostForm("pass")
+<<<<<<< HEAD
 	log.Print("Rut ---> " + inf_tmp.rut)
 	log.Print("Pass ---> " + inf_tmp.pass)
 
@@ -46,6 +47,17 @@ func processLogin(c *gin.Context) {
 		} else {
 				log.Print("Entro al else")
 				c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/")
+=======
+	inf.rut = "10100100-1"
+	inf.pass = "1234"
+	
+	if inf.rut != "" && inf.pass != "" {
+		var resp response //Esta estructura llevara las información total
+		if inf.rut != inf_tmp.rut || inf.pass != inf_tmp.pass {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"inf_tmp.rut":"nil", // nil = No logeado
+				})		
+>>>>>>> master
 		}
 	} else {
 		c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/") //Debe salirCREO
