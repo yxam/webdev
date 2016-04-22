@@ -11,13 +11,13 @@ Verifique su version de `go`:
 La aplicación requiere el framework HTTP `GIN` y la librería de `Postgres` para `Golang`.  
 Descarga e instalación ejecute los siguientes comandos en la terminal:
 ```
-$ go get github.com/gin-gonic/gin  
+$ go get -u github.com/gin-gonic/gin  
 ```
 ```
 $ go get github.com/lib/pq
 ```
 ``` 
-github.com/manucorporat/stats    
+$ go get github.com/manucorporat/stats    
 ```
 
 
@@ -29,7 +29,7 @@ $ go test -v webdev/test
 
 
 
-## Contributors
+## Colaboradores
 
 Aplicación desarrollada por :  *  
  [Farid Abulias.](https://github.com/fabulias/)   
