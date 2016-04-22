@@ -45,6 +45,7 @@ func processLogin(c *gin.Context) {
 				return
 			}
 		} else {
+				log.Print("Entro al else")
 				c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/")
 		}
 	} else {
