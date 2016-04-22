@@ -9,7 +9,7 @@ import (
 
 func TestInit(t *testing.T) {
 	flag := modelutil.Init()
-	if flag == true {
+	if flag != true {
 		t.Error("Mal hecho")
 	}
 }
