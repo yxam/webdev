@@ -42,10 +42,10 @@ func processLogin(c *gin.Context) {
 				c.JSON(http.StatusForbidden, gin.H{"StatusCode":http.StatusInternalServerError})
 			}
 		} else {
-				c.Redirect(http.StatusMovedPermanently, "google.com")
+				c.Redirect(http.StatusMovedPermanently, "http://www.google.com")
 		}
 	} else {
-		c.Redirect(http.BadRequest, "google.com") //Debe salirCREO
+		c.Redirect(http.BadRequest, "http://www.google.com") //Debe salirCREO
 	}
 }
 
