@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"database/sql"
 	"webdev/cmd/webdev/modelutil"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,7 +29,9 @@ func processLogin(c *gin.Context) {
 	var inf_tmp information
 	inf_tmp.rut = c.PostForm("rut")
 	inf_tmp.pass = c.PostForm("pass")
-	
+	log.Print("Rut -> " + strconv.Itoa(inf_tmp.rut))
+	log.Print("Pass -> " + strconv.Itoa(inf_tmp.pass))
+
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
 		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
 		if state {
