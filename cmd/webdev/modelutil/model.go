@@ -3,7 +3,7 @@ package modelutil
 import (
 	"database/sql"
 	"log"
-	"os"
+	//"os"
 
 	_ "github.com/lib/pq"
 )
