@@ -41,7 +41,7 @@ func processLogin(c *gin.Context) {
 				c.JSON(http.StatusOK, account)
 				return
 			} else {
-				c.JSON(http.StatusForbidden, gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
+				c.HTML(http.StatusInternalServerError, "index.html", gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
 				return
 			}
 		} else {
