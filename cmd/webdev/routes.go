@@ -27,7 +27,7 @@ type response struct {
 }
 
 func processLogin(c *gin.Context) {
-	var inf_tmp Information
+	var inf_tmp information
 	inf_tmp.rut = c.PostForm("rut")
 	inf_tmp.pass = c.PostForm("pass")
 	log.Print("Rut -> " + inf_tmp.rut)
