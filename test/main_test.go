@@ -3,7 +3,6 @@ package main
 import (
 	"testing"
 	"net/http"
-	"fmt"	
 
 	"github.com/franela/goreq"
 	//"github.com/franela/goblin" USAREMOS ESTO ;)
@@ -50,11 +49,7 @@ func TestProcessLoginParametrosValidosIncorrectos(t *testing.T) {
 		Uri : "https://abbanks.herokuapp.com/processLogin",
 		QueryString: item,
 	}.Do()
-	fmt.Println("Res -> ", res.StatusCode)
-	var m map[string]string
-	res.Body.FromJsonTo(&m)
-	fmt.Println(m)
-	if res.StatusCode != http.StatusInternalServerError {
+	if res.StatusCode != http.StatusMovedPermanently {
 		t.Error("Pagina debio no pasar")
 	}
 }

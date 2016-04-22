@@ -64,8 +64,6 @@ func Login(rut, pass string) bool {
 	_, err := db.Query("SELECT * FROM Cliente WHERE rut=$1 AND pass=$2", rut, pass)
     disconnect_db()
     switch {
-	    case err == sql.ErrNoRows:
-	    	 return false
 	    case err != nil:
 	         return false
 	    default:
