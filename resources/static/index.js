@@ -1,11 +1,10 @@
 
 ReactDOM.render(React.createElement(
     "form",
-    { "className": "login-form", "action": "processLogin", "method":"post", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},    
+    { "className": "login-form", "action": "processLogin", "method":"post", "enctype":"application/json", name:"form1", onsubmit:"javascript:return Rut(document.form1.rut.value)"},    
 React.createElement(
       "label",
       null,
-<<<<<<< HEAD
       React.createElement("font",{color:"black"},"RUT: ")
     ), 
     
@@ -15,15 +14,6 @@ React.createElement(
      "input", 
       { type: "text", "className": "form-control", name: "rut", placeholder: "**.***.***-*"}
     )),
-=======
-      "RUT: "
-    ),
-    React.createElement(
-      "font",{color:"black"},
-      React.createElement("input", 
-      { type: "text", "class": "form-control", name: "rut", placeholder: "**.***.***-*" })
-    ),
->>>>>>> master
     React.createElement(
       "br"),
     React.createElement(
@@ -42,14 +32,6 @@ React.createElement(
         { type: "pass", "className": "form-control", name: "pass", placeholder: "*******" }
       )
     ),
-<<<<<<< HEAD
-=======
-    React.createElement(
-     "font", { color:"black"},
-      React.createElement("input", 
-      { type: "pass", "class": "form-control", name: "pass", placeholder: "*******" })
-      ),
->>>>>>> master
     React.createElement(
       "br"),
     React.createElement(
