@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"webdev/cmd/webdev/modelutil"
 	"log"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -38,8 +39,10 @@ func processLogin(c *gin.Context) {
 			account := modelutil.Account(inf_tmp.rut)
 			if account != nil {
 				c.JSON(http.StatusOK, account)
+				return
 			} else {
-				c.JSON(http.StatusForbidden, gin.H{"StatusCode":http.StatusInternalServerError})
+				c.JSON(http.StatusForbidden, gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
+				return
 			}
 		} else {
 				c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/")
