@@ -30,8 +30,8 @@ func processLogin(c *gin.Context) {
 	var inf_tmp information
 	inf_tmp.rut = c.PostForm("rut")
 	inf_tmp.pass = c.PostForm("pass")
-	log.Print("Rut -> " + inf_tmp.rut)
-	log.Print("Pass -> " + inf_tmp.pass)
+	log.Print("Rut ---> " + inf_tmp.rut)
+	log.Print("Pass ---> " + inf_tmp.pass)
 
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
 		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
