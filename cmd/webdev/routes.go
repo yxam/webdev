@@ -27,14 +27,14 @@ type response struct {
 }
 
 func processLogin(c *gin.Context) {
-	var inf_tmp modelutil.Information
+	var inf_tmp Information
 	inf_tmp.rut = c.PostForm("rut")
 	inf_tmp.pass = c.PostForm("pass")
 	log.Print("Rut -> " + inf_tmp.rut)
 	log.Print("Pass -> " + inf_tmp.pass)
 
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
-		state := modelutil.Login(inf_tmp)
+		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
 		if state {
 			account := modelutil.Account(inf_tmp.rut)
 			if account != nil {
