@@ -17,7 +17,7 @@ var index = React.createClass({
 }
 });
 ReactDOM.render(
-    React.createElement(index), 
+    React.createElement(index,null), 
     document.getElementById('example')
 );
 
