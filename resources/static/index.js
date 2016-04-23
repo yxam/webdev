@@ -1,8 +1,9 @@
 
 
-var index = React.createClass({
-  render: function(){
-  return (<div className="index">
+var index = React.createClass({displayName: 'index',
+  render: function() {
+  return (
+          <div className="index">
           <div className="login-page">    
               <div className="form">   
                 <form class="register-form" action="/processLogin" method="post" enctype="application/json" name="form1" onsubmit="javascript:return Rut(document.form1.rut.value)">
