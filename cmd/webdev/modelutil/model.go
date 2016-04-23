@@ -11,8 +11,8 @@ var db *sql.DB = nil
 var err error
 
 type Information struct {
-	Rut  string 
-	Pass string //`form:"pass"`// json:"pass" binding:"required"`
+	rut  string 
+	pass string //`form:"pass"`// json:"pass" binding:"required"`
 }
 
 type account_s struct {
@@ -61,17 +61,11 @@ func Init() bool {
 
 func Login(rut, pass string) bool {
 	connect_db()
-	var tmp string
-	err := db.QueryRow("SELECT pass FROM cliente WHERE rut=$1 AND pass=$2", rut, pass).Scan(&tmp)
-	defer disconnect_db()
-	switch {
-		case err == sql.ErrNoRows:	
-			return false
-		case err != nil:
-			return false
-		default:
-			return true
-	}
+	row := db.QueryRow("SELECT pass FROM cliente WHERE rut=$1 AND pass=$2", rut, pass)
+	if row.Scan() == sql.ErrNoRows {
+		return false
+	} 
+	return true
 }
 
 func Account(rut string) *account_s {
