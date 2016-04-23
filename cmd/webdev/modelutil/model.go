@@ -3,7 +3,7 @@ package modelutil
 import (
 	"database/sql"
 	"log"
-	"os"
+	//"os"
 
 	_ "github.com/lib/pq"
 )
@@ -23,7 +23,8 @@ type account_s struct {
 }
 
 func connect_db() {
-	db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	db, err = sql.Open("postgres", "postgres://tbllgrkjejpwzv:e3D-VEc5BmjTyw6pESuJnzgQAo@ec2-54-221-249-201.compute-1.amazonaws.com:5432/dcvc2lb7meb7j5")
+		//os.Getenv("DATABASE_URL"))
     if err != nil {
         log.Fatalf("Error opening database: %q", err)
     }
@@ -64,20 +65,32 @@ func Init() bool {
 
 func Login(rut, pass string) bool {
 	connect_db()
-	tmp := new(Information)
-	err := db.QueryRow("SELECT nombre FROM Cliente WHERE rut=? AND pass=?", rut, pass).Scan(&tmp)
-    switch {
-	    case err == sql.ErrNoRows:
-	    	 defer disconnect_db()
-	    	 return false
-	    case err != nil:
-	         defer disconnect_db()
-	         return false
-	    default:
-	    	 defer disconnect_db()
-	    	 return true
-    }
- 
+	var tmp string
+	err := db.QueryRow("SELECT pass FROM cliente WHERE rut=$1 AND pass=$2", rut, pass).Scan(&tmp)
+	defer disconnect_db()
+	switch {
+		case err == sql.ErrNoRows:	
+			return false
+		case err != nil:
+			return false
+		default:
+			return true
+	}
+}
+
+func Login(rut, pass string) bool {
+	connect_db()
+	var tmp string
+	err := db.QueryRow("SELECT pass FROM cliente WHERE rut=$1 AND pass=$2", rut, pass).Scan(&tmp)
+	defer disconnect_db()
+	switch {
+		case err == sql.ErrNoRows:	
+			return false
+		case err != nil:
+			return false
+		default:
+			return true
+	}
 }
 
 func Account(rut string) *account_s {
