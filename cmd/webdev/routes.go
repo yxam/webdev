@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"database/sql"
 	"webdev/cmd/webdev/modelutil"
+	"log"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,21 +29,26 @@ func processLogin(c *gin.Context) {
 	var inf_tmp information
 	inf_tmp.rut = c.PostForm("rut")
 	inf_tmp.pass = c.PostForm("pass")
-	
+	log.Print("Rut ---> " + inf_tmp.rut)
+	log.Print("Pass ---> " + inf_tmp.pass)
+
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
 		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
 		if state {
 			account := modelutil.Account(inf_tmp.rut)
 			if account != nil {
 				c.JSON(http.StatusOK, account)
+				return
 			} else {
-				c.JSON(http.StatusForbidden, gin.H{})
+				c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/")//, gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
+				return
 			}
 		} else {
-				c.HTML(http.StatusBadRequest, "index.html", gin.H{"message":"User and/or pass is invalid"})
+				log.Print("Entro al else")
+				c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/")
 		}
 	} else {
-		c.AbortWithStatus(http.StatusNoContent) //Debe salirCREO
+		c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/") //Debe salirCREO
 	}
 }
 
