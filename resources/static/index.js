@@ -2,8 +2,7 @@
 
 var index = React.createClass({
   render: function(){
-  return (
-          '<div className="index">
+  return (<div className="index">
           <div className="login-page">    
               <div className="form">   
                 <form class="register-form" action="/processLogin" method="post" enctype="application/json" name="form1" onsubmit="javascript:return Rut(document.form1.rut.value)">
@@ -12,7 +11,7 @@ var index = React.createClass({
                    <button type="submit" className="button" >login</button>                    
                 </form>  
              </div>
-          </div></div>'
+          </div></div>
           );
     
 }
