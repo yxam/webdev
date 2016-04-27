@@ -1,4 +1,4 @@
-package consultas
+package main
 
 /* Maria Cristina Binfa*/
 
@@ -22,7 +22,7 @@ func main (){
 //Login()
 
 //hacertransferencia
-HacerTransferencia()
+//HacerTransferencia()
 }
 
 
@@ -165,7 +165,7 @@ fmt.Println(nuevo_d)
 // ahora hago un update de la información de los clientes
 
 //actualiza el saldo de origen
-/*stmt, err = db.Prepare("update cuenta set saldo=? where rut_cliente=?")
+stmt, err = db.Prepare("update cuenta set saldo=? where rut_cliente=?")
 if err != nil {
 		log.Println(err)}
 res, err = stmt.Exec(nuevo_o, rut_o) 
@@ -184,10 +184,11 @@ if err != nil{
 	log.Fatal(err)}
 defer stmt.Close()
 affect, err := res.RowsAffected()
-fmt.Println(affect)*/
+fmt.Println(affect)
+
 //ahora que esta todo actualizado mandamos el insert a la tabla transferencias
 
-/*stmt, err := db.Prepare("INSERT into transferencias values (?,?,?,?)")
+stmt, err := db.Prepare("INSERT into transferencias values (?,?,?,?)")
 	if err != nil {
 		log.Println(err)}
     
@@ -201,12 +202,12 @@ fmt.Println(affect)*/
     if err != nil {
 		log.Println(err)}
 
-    fmt.Println(id)*/
+    fmt.Println(id)
 }
 
 //en caso que no tenga la cantidad necesaria
-//if ( saldo_o<cant){
-//	println(" tay pato")}
+if ( saldo_o<cant){
+ println(" tay pato")}
 
 }
 
