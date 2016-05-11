@@ -15,7 +15,7 @@ type Item struct {
 
 func TestIndex(t *testing.T) {
 	_, err := goreq.Request{
-		Uri : "https://abbanks.herokuapp.com/",
+		Uri : "https://localhost:8080/",
 	}.Do()
 	if err != nil {
 		t.Error("Error en abrir index.html")
@@ -30,7 +30,7 @@ func TestProcessLoginParametrosVacios(t *testing.T) {
 
 	res, _ := goreq.Request{
 		Method : "POST",
-		Uri : "https://abbanks.herokuapp.com/processLogin",
+		Uri : "https://localhost:8080/processLogin",
 		QueryString: item,
 	}.Do()
 	if res.StatusCode != http.StatusMovedPermanently {
@@ -46,7 +46,7 @@ func TestProcessLoginParametrosValidosIncorrectos(t *testing.T) {
 
 	res, _ := goreq.Request{
 		Method : "POST",
-		Uri : "https://abbanks.herokuapp.com/processLogin",
+		Uri : "https://localhost:8080/processLogin",
 		QueryString: item,
 	}.Do()
 	if res.StatusCode != http.StatusMovedPermanently {

@@ -34,10 +34,15 @@ func processLogin(c *gin.Context) {
 
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
 		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
+		log.Print(state)
 		if state {
-			account := modelutil.Account(inf_tmp.rut)
-			if account != nil {
-				c.JSON(http.StatusOK, account)
+			account, err := modelutil.Account(inf_tmp.rut)
+
+			//var a modelutil.account_s
+			//a, err := modelutil.Account(inf_tmp)
+			log.Printf("Cuenta - > ", account)
+			if err == nil {
+				c.HTML(http.StatusOK, "https://localhost:8080/continue", account)
 				return
 			} else {
 				c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/")//, gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
@@ -62,7 +67,7 @@ func createdb(c *gin.Context) {
 }
 
 //func printdb(c *gin.Context) {
-//	
+//
 //}
 
 //func createdb(c *gin.Context) {
@@ -70,7 +75,7 @@ func createdb(c *gin.Context) {
 //	if err != nil {
 //		c.JSON(http.StatusInternalServerError, gin.H{"Message":"Error en la db"})
 //	}
-//	
+//
 //    //var create []string
 //	//
 //	create, err := db.Prepare("CREATE TABLE IF NOT EXISTS HOLA (rut varchar(12), pass varchar(4) NOT NULL, PRIMARY KEY(rut))")
@@ -80,13 +85,13 @@ func createdb(c *gin.Context) {
 //	//create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
 //	////serial = (int) auto_increment
 //    //create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo integer NOT NULL, saldo integer NOT NULL"
-//    ////id = numero de cuenta, por eso bigint y no serial que es auto incremental. 
-//    //create[3] ="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
+//    ////id = numero de cuenta, por eso bigint y no serial que es auto incremental.
+//    //create[3] ="CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))"
 //    //timestamp, guarda fecha y hora
 ////    var length = cap(create)
 ////    i := 0
-////    for i < length { 
-////	    _, err := db.Exec(create[i])    
+////    for i < length {
+////	    _, err := db.Exec(create[i])
 ////	    if err != nil {
 ////			//disconnect_db()
 ////	        db.Close()
@@ -123,7 +128,7 @@ func marii(c *gin.Context) {
 
 	var numerosaldo float64
 	var rut string
-	
+
 	rut = "123"
 
 	err = db.QueryRow("select saldo from cuenta where cuenta.rut_cliente=$1",rut).Scan(&numerosaldo)
@@ -133,5 +138,3 @@ func marii(c *gin.Context) {
 	c.JSON(200, gin.H{"Message":numerosaldo})
 
 }
-
-
