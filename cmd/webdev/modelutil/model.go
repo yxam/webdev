@@ -84,45 +84,21 @@ func Account(rut string) *account_s {
 	}
 }
 
-/*func IngCliente(rut string, pass string, pass2) bool{
+func IngCliente(rut_n string, pass int, pass2 int) bool{
 
-	 if pass==pass2 {
-	 	connect_db()
-	 	stmt := db.Prepare("INSERT INTO cliente values ($1,$2)")
-	 	_, err := stmt.Exec(rut,pass)    
-	    if err != nil {
-	        disconnect_db()
-	        return false}
-    	disconnect_db()
-    	return true
-
-	 }
-
-	 fmt.Println("las contraseñas no concuerdan")
-
-}*/
-
-/*func CreateAcc(id int, rut string, tipo int, saldo int) bool {
-
-	//comprobar que el rut exista
 	connect_db()
-	row := db.QueryRow("SELECT rut_cliente FROM Cuenta WHERE rut_cliente=?",rut)
-	disconnect_db() 
-	//existe tal row?
-	if row == sql.ErrNoRows { return false}
-	
-	// y si existe, crea su cuenta
-	connect_db()
-	stmt := db.Prepare("INSERT INTO Cuenta VALUES ($1,$2,$3,$4)")
-	_, err := stmt.Exec(id, rut, tipo, saldo)
-	if err !=nil {
+	row :=db.QueryRow("SELECT rut FROM cliente WHERE cliente.rut = $1", rut_n)
+	//si existe el rut, o la contraseña 1 es distinta  la de verificacion entonces no se ingresa
+	if (row.Scan() != sql.ErrNoRows || pass != pass2){
 		disconnect_db()
-		return false}
-	disconnect_db()
-	return true
-	fmt.Println("Cuenta ingresada con exito!")
-}*/
-
+		return false
+	}
+	//caso de que no exista el rut, y la contraseña 1 es igual a la de verificación se crea cuenta
+	_=db.QueryRow("INSERT INTO cliente values ($1,$2)", rut_n, pass)
+ 	disconnect_db()
+ 	return true
+    
+}
 
 
 

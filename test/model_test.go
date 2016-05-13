@@ -93,3 +93,35 @@ func TestTransferenciaFalse(t *testing.T){
         t.Error ("transfirio lo que no debio ser transferido")
     }
 }
+
+
+//crear cliente exito! tira FAIL pq ya lo creó, pero en el inicio pasó la prueba
+func TestCrearClienteTrue(t *testing.T){
+    res :=modelutil.IngCliente("22222222-2", 123, 123)
+    if res == false {
+        t.Error ("debió ser creada")
+    }
+}
+
+//el rut existe por lo tanto no deberia crear cliente
+func TestCrearClienteFalse1(t *testing.T){
+    res :=modelutil.IngCliente("18023904-9", 123, 123)
+    if res == true {
+        t.Error("no debio de ser creada, el rut ya existe")
+    }
+}
+
+//el rut existe, pero las constraseñas no concuerdan
+func TestCrearClienteFalse2(t *testing.T){
+    res :=modelutil.IngCliente("33333333-3", 123, 321)
+    if res == true {
+        t.Error("no debio ser creado, password dont match")
+    }
+}
+//rut existe, password no concuerda, no deberia ser creado por ningun motivo
+func TestCrearClienteFalse3(t *testing.T){
+    res :=modelutil.IngCliente("18023904-9", 123, 321)
+    if res == true{
+        t.Error("el rut ya existe, password dont match")
+    }
+}
