@@ -48,7 +48,8 @@ func processLogin(c *gin.Context) {
 			log.Printf("Cuenta de -----> ", account.id)
 			
 			if err == nil {
-				c.HTML(http.StatusOK, "menu.html", gin.H{ "nombre":inf_tmp.rut, "edad":"4"})
+				c.HTML(http.StatusOK, "menu.html",account) 
+					//gin.H{ "nombre":inf_tmp.rut, "edad":"4"})
 				return
 			} else {
                 //c.HTML(http.StatusOK, "http://localhost:8080/menu.html",inf_tmp)
