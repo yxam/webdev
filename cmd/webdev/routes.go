@@ -30,31 +30,35 @@ type response struct {
 	message string
 }
 
+type res struct {
+    ac modelutil.Account_s
+}
+
 func processLogin(c *gin.Context) {
 	var inf_tmp information
 	inf_tmp.rut = c.PostForm("rut")
 	inf_tmp.pass = c.PostForm("pass")
 	log.Print("Rut ---> " + inf_tmp.rut)
 	log.Print("Pass ---> " + inf_tmp.pass)
-    
+
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
 		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
 		log.Print(state)
 		if state {
-            
-			account, err := modelutil.Account(inf_tmp.rut)           
 			//var a modelutil.account_s
 			//a, err := modelutil.Account(inf_tmp)
-			log.Printf("Cuenta de -----> ", account.id)
-			
+			var account modelutil.Account_s
+			account, err := modelutil.Account(inf_tmp.rut)
+			log.Printf("Es algo -> ", account)
 			if err == nil {
-				c.HTML(http.StatusOK, "menu.html",account) 
+				//c.HTML(http.StatusOK, "menu.html",account)
+				c.JSON(http.StatusOK, account)
 					//gin.H{ "nombre":inf_tmp.rut, "edad":"4"})
-				return
+
 			} else {
                 //c.HTML(http.StatusOK, "http://localhost:8080/menu.html",inf_tmp)
 				c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/")//, gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
-				return
+
 			}
 		} else {
 				log.Print("Entro al else")

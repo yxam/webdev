@@ -16,11 +16,11 @@ type Information struct {
 	Pass string //`form:"pass"`// json:"pass" binding:"required"`
 }
 
-type account_s struct {
-	id int
-	rut_cliente string
-	tipo int
-	saldo int
+type Account_s struct {
+	Id int
+	Rut_cliente string
+	Tipo int
+	Saldo int
 }
 
 func connect_db() {
@@ -76,14 +76,14 @@ func Login(rut, pass string) bool {
 	}
 }
 
-func Account(rut string) (account_s, error) {
+func Account(rut string) (Account_s, error) {
 	connect_db()
-	var tmp account_s
+	var tmp Account_s
 	log.Printf("rut -> ", rut)
 	fmt.Println(rut)
-	row := db.QueryRow("SELECT id, rut_cliente, tipo, saldo FROM cuenta WHERE cuenta.rut_cliente = $1", rut).Scan(&tmp.id,&tmp.rut_cliente,&tmp.tipo,&tmp.saldo)
+	row := db.QueryRow("SELECT id, rut_cliente, tipo, saldo FROM cuenta WHERE cuenta.rut_cliente = $1", rut).Scan(&tmp.Id,&tmp.Rut_cliente,&tmp.Tipo,&tmp.Saldo)
 	log.Print(row)
-	log.Printf("Dentro de acc -> ", tmp.id)
+	log.Printf("Dentro de acc -> ", tmp.Id)
 	disconnect_db()
 	//tmp.s = true
 	switch {
