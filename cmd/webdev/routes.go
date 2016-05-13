@@ -17,7 +17,12 @@ type information struct {
 	rut  string //`form:"rut"`// json:"rut" binding:"required"
 	pass string //`form:"pass"`// json:"pass" binding:"required"`
 }
-
+type account_s struct {
+	id int
+	rut_cliente string
+	tipo int
+	saldo int
+}
 type response struct {
 	rut string
 	pass string
@@ -31,29 +36,32 @@ func processLogin(c *gin.Context) {
 	inf_tmp.pass = c.PostForm("pass")
 	log.Print("Rut ---> " + inf_tmp.rut)
 	log.Print("Pass ---> " + inf_tmp.pass)
-
+    
 	if inf_tmp.rut != "" && inf_tmp.pass != "" {
 		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
 		log.Print(state)
 		if state {
-			account, err := modelutil.Account(inf_tmp.rut)
-
+            
+			account, err := modelutil.Account(inf_tmp.rut)           
 			//var a modelutil.account_s
 			//a, err := modelutil.Account(inf_tmp)
-			log.Printf("Cuenta - > ", account)
+			log.Printf("Cuenta de -----> ", account.id)
+			
 			if err == nil {
-				c.HTML(http.StatusOK, "https://localhost:8080/continue", account)
+				c.HTML(http.StatusOK, "menu.html", gin.H{ "nombre":inf_tmp.rut, "edad":"4"})
 				return
 			} else {
-				c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/")//, gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
+                //c.HTML(http.StatusOK, "http://localhost:8080/menu.html",inf_tmp)
+				c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/")//, gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
 				return
 			}
 		} else {
 				log.Print("Entro al else")
-				c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/")
+				//c.HTML(http.StatusOK, "http://localhost:8080/",inf_tmp)
+				c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/")
 		}
 	} else {
-		c.Redirect(http.StatusMovedPermanently, "https://abbanks.herokuapp.com/") //Debe salirCREO
+		c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/") //Debe salirCREO
 	}
 }
 

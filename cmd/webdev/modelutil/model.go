@@ -81,14 +81,14 @@ func Account(rut string) (account_s, error) {
 	var tmp account_s
 	log.Printf("rut -> ", rut)
 	fmt.Println(rut)
-	row := db.QueryRow("SELECT id, rut_cliente, tipo, saldo FROM cuenta WHERE cuenta.rut_cliente == $1", rut).Scan(&tmp)
+	row := db.QueryRow("SELECT id, rut_cliente, tipo, saldo FROM cuenta WHERE cuenta.rut_cliente = $1", rut).Scan(&tmp.id,&tmp.rut_cliente,&tmp.tipo,&tmp.saldo)
 	log.Print(row)
-	log.Printf("Dentro de acc -> ", tmp)
+	log.Printf("Dentro de acc -> ", tmp.id)
 	disconnect_db()
 	//tmp.s = true
 	switch {
 		case row == sql.ErrNoRows:
-	//		tmp.s = false
+	//	tmp.s = false
 			return tmp, row
 		case row != nil:
 	//da		tmp.s = false
