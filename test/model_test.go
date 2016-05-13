@@ -77,3 +77,19 @@ func TestLoginFalse4(t *testing.T) {
         t.Error("La cuenta no existe")
     }
 }
+
+//Se realizó la Transferencia
+func TestTransferenciaTrue(t *testing.T){
+    res :=modelutil.Transferencia("10100100-1","18023904-9", 1000)
+    if res == false {
+        t.Error("Se debio transferir")
+    }
+}
+
+// no tiene dinero en el saldo para Transferir 
+func TestTransferenciaFalse(t *testing.T){
+    res :=modelutil.Transferencia("10100100-1","18023904-9",500000)
+    if res == true {
+        t.Error ("transfirio lo que no debio ser transferido")
+    }
+}

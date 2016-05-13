@@ -5,6 +5,7 @@ import (
 	"log"
 	//"os"
 	_ "github.com/lib/pq"
+	"time"
 )
 
 var db *sql.DB = nil
@@ -81,4 +82,89 @@ func Account(rut string) *account_s {
 		default:
 			return tmp
 	}
+}
+
+/*func IngCliente(rut string, pass string, pass2) bool{
+
+	 if pass==pass2 {
+	 	connect_db()
+	 	stmt := db.Prepare("INSERT INTO cliente values ($1,$2)")
+	 	_, err := stmt.Exec(rut,pass)    
+	    if err != nil {
+	        disconnect_db()
+	        return false}
+    	disconnect_db()
+    	return true
+
+	 }
+
+	 fmt.Println("las contraseñas no concuerdan")
+
+}*/
+
+/*func CreateAcc(id int, rut string, tipo int, saldo int) bool {
+
+	//comprobar que el rut exista
+	connect_db()
+	row := db.QueryRow("SELECT rut_cliente FROM Cuenta WHERE rut_cliente=?",rut)
+	disconnect_db() 
+	//existe tal row?
+	if row == sql.ErrNoRows { return false}
+	
+	// y si existe, crea su cuenta
+	connect_db()
+	stmt := db.Prepare("INSERT INTO Cuenta VALUES ($1,$2,$3,$4)")
+	_, err := stmt.Exec(id, rut, tipo, saldo)
+	if err !=nil {
+		disconnect_db()
+		return false}
+	disconnect_db()
+	return true
+	fmt.Println("Cuenta ingresada con exito!")
+}*/
+
+
+
+
+func Transferencia(rut_o string, rut_d string, cantidad int) bool{
+	var saldo_o, saldo_d int
+	var nuevo_o, nuevo_d int
+	connect_db()
+	//obtener saldos de origen y destino
+	_=db.QueryRow("select saldo from cuenta where rut_cliente=$1",rut_o).Scan(&saldo_o)
+	_=db.QueryRow("select saldo from cuenta where rut_cliente=$1",rut_d).Scan(&saldo_d)
+	disconnect_db()
+    
+	//comprobar que se puede efectuar la transferencia
+	
+	
+	if (saldo_o > cantidad){
+
+		nuevo_o = saldo_o - cantidad;
+		nuevo_d = saldo_d + cantidad;
+
+	//update a las tablas
+		connect_db()
+		//actualizar saldo del que transfirió
+		_=db.QueryRow("UPDATE Cuenta SET saldo=$1 where rut_cliente= $2",nuevo_o, rut_o)
+
+		//actualizar saldo del destinatario
+		_=db.QueryRow("UPDATE cuenta SET saldo=$1 where rut_cliente= $2",nuevo_d, rut_d)
+		
+
+
+		//ahora que estan updateados los datos se hace la transferencia
+		fecha:=time.Now()
+		_=db.QueryRow("INSERT INTO Transferencia VALUES ($1,$2,$3,$4)",rut_o, rut_d, cantidad,fecha)
+		
+
+
+		//si no hay error y la transferencia fue un exito!
+		disconnect_db()
+		return true
+	}
+
+	//en caso que no se pueda transferir, retorna falso cuando no tiene saldo suficiente para transferir
+
+	return false
 }
