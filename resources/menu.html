@@ -18,29 +18,39 @@
     <link rel="stylesheet" type="text/css" href="/static/bootstrap-theme.min.css">
     <link href="static/landing-page.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="/static/jquery-2.2.3.js"></script>
-</head>
-<body>
-   <h1>HOLA ESTE ES EL MENU de {{ .nombre }} y su edad es {{ .edad }}  </h1>
-<!--<script type="text/javascript">
-    var cuenta ={
-    id: {},
-    rut_cliente: {},
-    tipo: {},
-    saldo: {}
-    };
-   $.ajax({
-    dataType:"json",
-    url: "processLogin",
-    data: cuenta,
-    success: function(cuenta){
-        console.log("HOLA->" + cuenta.rut_cliente)
-    }
+<script type="text/babel">
+     var cuenta ={};
+
+
+     $.ajax({
+         type: 'POST',
+         contentType: "application/json; charset=utf-8",
+         dataType:"JSON",
+         url: 'processLogin',
+         success: function (data){
+            console.log(data)
+            //var json = $.parseJSON(data);
+
+
+          
+         },
+         error: function(result){alert("ERROR");}
+
+     });
+   
     
-   });
 
 </script>
-   <script type="text/babel" src="/static/menu.js"></script> -->
+</head>
+<body>
+ <script type="text/javascript">
 
+ </script>  
+
+  <!-- <script type="text/babel" src="/static/menu.js"></script> -->
+
+
+<div id="example"></div>
 
 
 </body>

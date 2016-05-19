@@ -6,6 +6,7 @@ import (
 	"fmt"
 	//"os"
 	_ "github.com/lib/pq"
+	
 )
 
 var db *sql.DB = nil
@@ -17,10 +18,10 @@ type Information struct {
 }
 
 type account_s struct {
-	id int
-	rut_cliente string
-	tipo int
-	saldo int
+	id int `json:"id"`
+	rut_cliente string `json: "rut_cliente"`
+	tipo int `json: "tipo"`
+	saldo int `json: "saldo"`
 }
 
 func connect_db() {
@@ -83,8 +84,10 @@ func Account(rut string) (account_s, error) {
 	fmt.Println(rut)
 	row := db.QueryRow("SELECT id, rut_cliente, tipo, saldo FROM cuenta WHERE cuenta.rut_cliente = $1", rut).Scan(&tmp.id,&tmp.rut_cliente,&tmp.tipo,&tmp.saldo)
 	log.Print(row)
-	log.Printf("Dentro de acc -> ", tmp.id)
-	disconnect_db()
+
+	log.Printf("Dentro de acc -> ", tmp)
+    	
+    disconnect_db()
 	//tmp.s = true
 	switch {
 		case row == sql.ErrNoRows:

@@ -5,8 +5,7 @@ import (
 	"database/sql"
 	"webdev/cmd/webdev/modelutil"
 	"log"
-
-	"github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin"
 )
 
 func index(c *gin.Context) {
@@ -18,21 +17,18 @@ type information struct {
 	pass string //`form:"pass"`// json:"pass" binding:"required"`
 }
 type account_s struct {
-	id int
-	rut_cliente string
-	tipo int
-	saldo int
+	id int `json:"id"`
+	rut_cliente string `json: "rut_cliente"`
+	tipo int `json: "tipo"`
+	saldo int `json: "saldo"`
 }
 type response struct {
-	rut string
+	rut string 
 	pass string
 	saldo int
 	message string
 }
 
-type res struct {
-    ac modelutil.Account_s
-}
 
 func processLogin(c *gin.Context) {
 	var inf_tmp information
@@ -45,16 +41,21 @@ func processLogin(c *gin.Context) {
 		state := modelutil.Login(inf_tmp.rut, inf_tmp.pass)
 		log.Print(state)
 		if state {
-			//var a modelutil.account_s
 			//a, err := modelutil.Account(inf_tmp)
-			var account modelutil.Account_s
+			
 			account, err := modelutil.Account(inf_tmp.rut)
+			
+  			
+			//aux=account
+            
 			log.Printf("Es algo -> ", account)
+			
 			if err == nil {
-				//c.HTML(http.StatusOK, "menu.html",account)
-				c.JSON(http.StatusOK, account)
+				c.HTML(http.StatusOK, "menu.html",gin.H{account})
+				
+				//c.JSON(http.StatusOK, account) 
 					//gin.H{ "nombre":inf_tmp.rut, "edad":"4"})
-
+                  
 			} else {
                 //c.HTML(http.StatusOK, "http://localhost:8080/menu.html",inf_tmp)
 				c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/")//, gin.H{"StatusCode": strconv.Itoa(http.StatusInternalServerError)})
