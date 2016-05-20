@@ -17,11 +17,11 @@ type information struct {
 	rut  string //`form:"rut"`// json:"rut" binding:"required"
 	pass string //`form:"pass"`// json:"pass" binding:"required"`
 }
-type account_s struct {
-	id int
-	rut_cliente string
-	tipo int
-	saldo int
+type Account_s struct {
+	Id int
+	Rut_cliente string
+	Tipo int
+	Saldo int
 }
 type response struct {
 	rut string
@@ -49,10 +49,11 @@ func processLogin(c *gin.Context) {
 			//a, err := modelutil.Account(inf_tmp)
 			var account modelutil.Account_s
 			account, err := modelutil.Account(inf_tmp.rut)
-			log.Printf("Es algo -> ", account)
+			log.Printf("Es algo -> ", account.Id)
 			if err == nil {
-				//c.HTML(http.StatusOK, "menu.html",account)
-				c.JSON(http.StatusOK, account)
+				c.HTML(http.StatusOK, "menu.html",account)
+					//gin.H{"rut_cliente":account.Rut_cliente, "Id":account.Id})
+				//c.JSON(http.StatusOK, account)
 					//gin.H{ "nombre":inf_tmp.rut, "edad":"4"})
 
 			} else {
