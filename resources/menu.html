@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/static/bootstrap-theme.min.css">
     <link href="static/landing-page.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="/static/jquery-2.2.3.js"></script>
+<<<<<<< HEAD
 </head>
 <body>
 
@@ -27,7 +28,41 @@
    <script type="text/babel" src="/static/menu.js"></script> 
    </div>
        
+=======
+<script type="text/babel">
+     var cuenta ={};
 
+
+     $.ajax({
+         type: 'POST',
+         contentType: "application/json; charset=utf-8",
+         dataType:"JSON",
+         url: 'processLogin',
+         success: function (data){
+            console.log(data)
+            //var json = $.parseJSON(data);
+
+
+          
+         },
+         error: function(result){alert("ERROR");}
+
+     });
+   
+    
+
+</script>
+</head>
+<body>
+ <script type="text/javascript">
+
+ </script>  
+
+  <!-- <script type="text/babel" src="/static/menu.js"></script> -->
+
+>>>>>>> 7aaf9a09c2692b7f0109fb665b5c36a0843fe225
+
+<div id="example"></div>
 
 
 </body>
