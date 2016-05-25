@@ -51,8 +51,8 @@ func processLogin(c *gin.Context) {
 			account, err := modelutil.Account(inf_tmp.rut)
 			log.Printf("Es algo -> ", account)
 			if err == nil {
-				//c.HTML(http.StatusOK, "menu.html",account)
-				c.JSON(http.StatusOK, account)
+				c.HTML(http.StatusOK, "menu.html",account)
+				//c.JSON(http.StatusOK, account)
 					//gin.H{ "nombre":inf_tmp.rut, "edad":"4"})
 
 			} else {

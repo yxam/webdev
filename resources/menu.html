@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -18,30 +18,40 @@
     <link rel="stylesheet" type="text/css" href="/static/bootstrap-theme.min.css">
     <link href="static/landing-page.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="/static/jquery-2.2.3.js"></script>
+    <script type="text/javascript">
+        function MOSTRAR(){
+            alert({{.Rut_cliente}});
+        }
+    </script>
+
 </head>
-<body>
-   <h1>HOLA ESTE ES EL MENU de {{ .nombre }} y su edad es {{ .edad }}  </h1>
-<!--<script type="text/javascript">
-    var cuenta ={
-    id: {},
-    rut_cliente: {},
-    tipo: {},
-    saldo: {}
-    };
-   $.ajax({
-    dataType:"json",
-    url: "processLogin",
-    data: cuenta,
-    success: function(cuenta){
-        console.log("HOLA->" + cuenta.rut_cliente)
-    }
+<body style="background-color:#D8D8D8">
     
-   });
-
-</script>
-   <script type="text/babel" src="/static/menu.js"></script> -->
-
-
-
+   <!--Cabecera de la página ira el banner, información de cliente y opción de cerrar sesión -->
+   <div class="row">
+        <div class="col-xs-12" style="background-color:green"><h1>PROXIMAMENTE BANNER</h1></div>
+   </div>
+   <br>
+   Bienvenido {{.Rut_cliente}}
+   <br>
+   <!--Barra de opciones.-->
+   <div class="row">
+        <div class="col-xs-4">
+            <div class="btn-group-vertical" role="group">
+                <button class="btn btn-success" title="Para editar su información personal entre aquí">Mi perfil</button>
+                <button class="btn btn-success" title="Vea los ultimos movimientos de su cuenta aquí">Últimos movimientos</button>
+                <button class="btn btn-success" title="Sí desea transferir fondos ingrese aquí">Transferencias</button>
+                <button class="btn btn-success">Pago Cuentas</button>
+                <div class="container">
+                <div id="miperfil"></div>
+                <div id="movimientos"></div>
+                <div id="transferencias"></div>
+                <div id="cuentas"></div>  
+                </div>
+ 
+   </div>
+   </div>
+   </div>
+<!-- <script type="text/babel" src="static/menu.js"></script> -->
 </body>
 </html>

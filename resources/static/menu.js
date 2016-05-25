@@ -1,3 +1,6 @@
-var datos= $.getJSON("../../cmd/webdev/routes.go", Function(json){ console.log("JSON DATA: "+json.users.rut_cliente)});
-
-
+var aux= React.createClass({
+	render:function(){
+    return(<h1>HI! {{.Rut_cliente}}</h1>);
+	}
+});
+ReactDOM.render(<aux>,document.getElementById('miperfil'));
