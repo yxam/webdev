@@ -45,7 +45,7 @@ func Init() bool {
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut))"
 	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
 	create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo integer NOT NULL, saldo integer NOT NULL)"
-    create[3] = "CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
+    create[3] = "CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), cuenta_origen integer, rut_destino varchar(12) NOT NULL, cuenta_destino integer, monto integer NOT NULL,fecha timestamp,PRIMARY KEY (rut_origen,fecha))" 
     var length = cap(create)
     i := 0
     for i < length { 
@@ -102,13 +102,13 @@ func IngCliente(rut_n string, pass int, pass2 int) bool{
 
 
 
-func Transferencia(rut_o string, rut_d string, cantidad int) bool{
+func Transferencia(rut_o string, rut_d string, cantidad int, cuenta_o int, cuenta_d int) bool{
 	var saldo_o, saldo_d int
 	var nuevo_o, nuevo_d int
 	connect_db()
 	//obtener saldos de origen y destino
-	_=db.QueryRow("select saldo from cuenta where rut_cliente=$1",rut_o).Scan(&saldo_o)
-	_=db.QueryRow("select saldo from cuenta where rut_cliente=$1",rut_d).Scan(&saldo_d)
+	_=db.QueryRow("select saldo from cuenta where rut_cliente=$1 AND tipo=$2",rut_o, cuenta_o).Scan(&saldo_o)
+	_=db.QueryRow("select saldo from cuenta where rut_cliente=$1 AND tipo=$2",rut_d, cuenta_d).Scan(&saldo_d)
 	disconnect_db()
     
 	//comprobar que se puede efectuar la transferencia
@@ -122,16 +122,16 @@ func Transferencia(rut_o string, rut_d string, cantidad int) bool{
 	//update a las tablas
 		connect_db()
 		//actualizar saldo del que transfirió
-		_=db.QueryRow("UPDATE Cuenta SET saldo=$1 where rut_cliente= $2",nuevo_o, rut_o)
+		_=db.QueryRow("UPDATE Cuenta SET saldo=$1 where rut_cliente= $2 AND tipo=$3",nuevo_o, rut_o, cuenta_o)
 
 		//actualizar saldo del destinatario
-		_=db.QueryRow("UPDATE cuenta SET saldo=$1 where rut_cliente= $2",nuevo_d, rut_d)
+		_=db.QueryRow("UPDATE cuenta SET saldo=$1 where rut_cliente= $2 AND tipo=$3",nuevo_d, rut_d, cuenta_d)
 		
 
 
 		//ahora que estan updateados los datos se hace la transferencia
 		fecha:=time.Now()
-		_=db.QueryRow("INSERT INTO Transferencia VALUES ($1,$2,$3,$4)",rut_o, rut_d, cantidad,fecha)
+		_=db.QueryRow("INSERT INTO Transferencia VALUES ($1,$2,$3,$4,$5,$6)",rut_o, cuenta_o, rut_d, cuenta_d, cantidad, fecha)
 		
 
 
@@ -144,3 +144,23 @@ func Transferencia(rut_o string, rut_d string, cantidad int) bool{
 
 	return false
 }
+
+
+/*func HistorialdeTransferencia(rut_o string, orden string) bool{
+
+	connect_db()
+	//va a comprobar si el rut existe en la tabla transferencia
+	row :=db.QueryRow("SELECT rut_origen FROM Transferencia WHERE rut_origen = $1", rut_o)
+
+
+	//si no existe el rut en la tabla porque no ha transferido o ingreso mal un orden, no se ingresa
+		if (row.Scan() == sql.ErrNoRows || orden != "fecha" || orden != "tipo_cuenta"){
+		disconnect_db()
+		return false
+		}
+ 
+	_=db.QueryRow("SELECT * from transferencia WHERE rut_origen=$1 ORDER BY $2 ",rut_o, orden)
+	disconnect_db()
+	return true
+}*/
+

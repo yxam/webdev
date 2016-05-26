@@ -78,9 +78,10 @@ func TestLoginFalse4(t *testing.T) {
     }
 }
 
+
 //Se realizó la Transferencia
 func TestTransferenciaTrue(t *testing.T){
-    res :=modelutil.Transferencia("10100100-1","18023904-9", 1000)
+    res :=modelutil.Transferencia("22222222-2","18023904-9",500,1,1)
     if res == false {
         t.Error("Se debio transferir")
     }
@@ -88,7 +89,7 @@ func TestTransferenciaTrue(t *testing.T){
 
 // no tiene dinero en el saldo para Transferir 
 func TestTransferenciaFalse(t *testing.T){
-    res :=modelutil.Transferencia("10100100-1","18023904-9",500000)
+    res :=modelutil.Transferencia("10100100-1","18023904-9",500000,1,1)
     if res == true {
         t.Error ("transfirio lo que no debio ser transferido")
     }
@@ -123,5 +124,45 @@ func TestCrearClienteFalse3(t *testing.T){
     res :=modelutil.IngCliente("18023904-9", 123, 321)
     if res == true{
         t.Error("el rut ya existe, password dont match")
+    }
+}
+
+//deberia mostrar orden por fecha
+func TestHistorialTransferenciaTrue1(t *testing.T){
+    res :=modelutil.HistorialdeTransferencia("22222222-2","fecha")
+    if res == false {
+        t.Error("debió mostrar orden por fecha")
+    }
+}
+
+//deberia mostrar orden por tipo de cuenta
+func TestHistorialTransferenciaTrue2(t *testing.T){
+    res :=modelutil.HistorialdeTransferencia("22222222-2","tipo_cuenta")
+    if res == false {
+        t.Error("debió mostrar orden por tipo cuenta")
+    }
+}
+
+//rut no existe 
+func TestHistorialTransferenciaFalse1(t *testing.T){
+    res :=modelutil.HistorialdeTransferencia("10100100-4","fecha")
+    if res == true {
+        t.Error("el rut es inválido no debió haber mostrado")
+    }
+}
+
+//no existe tipo de orden
+func TestHistorialTransferenciaFalse2(t *testing.T){
+    res :=modelutil.HistorialdeTransferencia("10100100-1","pipi")
+    if res == true {
+        t.Error("no existe ese orden, no deberia mostrar nada")
+    }
+}
+
+//ni el rut ni el tipo de orden existe no deberia mostrar nada
+func TestHistorialTransferenciaFalse3(t *testing.T){
+    res :=modelutil.HistorialdeTransferencia("10100100-4","pipi")
+    if res == true {
+        t.Error("rut no existe, ni el tipo de orden")
     }
 }
