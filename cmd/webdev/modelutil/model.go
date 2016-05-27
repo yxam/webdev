@@ -42,11 +42,14 @@ func disconnect_db() {
 func Init() bool {
 	connect_db()
 
-    var create [4]string
-	create[0] = "CREATE TABLE IF NOT EXISTS Cliente (rut varchar(12), pass varchar(4) NOT NULL,	PRIMARY KEY(rut))"
-	create[1] = "CREATE TABLE IF NOT EXISTS Banco (id serial, nombre varchar(50) NOT NULL, PRIMARY KEY (id))"
-	create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(id bigint, rut_cliente varchar(12) REFERENCES cliente(rut), tipo integer NOT NULL, saldo integer NOT NULL)"
-    create[3] = "CREATE TABLE IF NOT EXISTS Transferencia(rut_origen varchar(12) REFERENCES cliente(rut), rut_destino varchar(12) NOT NULL,monto integer NOT NULL, fecha timestamp,PRIMARY KEY (rut_origen,fecha))"
+    var create [6]string
+	create[0] = "CREATE TABLE IF NOT EXISTS Cliente(Rut  varchar(12), Password varchar[4],Nombre string, Direccion string, Comuna string, Ciudad string, Telefono string, mail string ,PRIMARY KEY(Rut) )"
+	create[1] = "CREATE TABLE IF NOT EXISTS Banco (Id int, Nombre string, Ciudad string, PRIMARY KEY (Id))"
+	create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(Nmro_cuenta bigint, rut_cliente varchar(12) REFERENCES Cliente(Rut), Tipo integer REFERENCES Tipo_cuentas(Id) NOT NULL, Saldo integer NOT NULL, PRIMARY KEY(Nmro_cuenta))"
+    create[3] = "CREATE TABLE IF NOT EXISTS Transferencia(Id bigint, Cuenta_origen bigint REFERENCES Cuenta(Nmro_cuenta), Cuenta_destino bigint, Monto int, Fecha timestamp, PRIMARY KEY(Id))"
+    create[4] = "CREATE TABLE IF NOT EXISTS Persona_nocliente(Rut varchar(12), Nombre string, Nmro_cuenta bigint, Tipo integer REFERENCES Tipo_cuentas(Id), Banco int REFERENCES Banco(Id), PRIMARY KEY(Rut))"
+    create[5] = "CREATE TABLE IF NOT EXISTS Banco(Id int, Nombre string NOT NULL, Ciudad string NOT NULL, PRIMARY KEY (Id))"
+
     var length = cap(create)
     i := 0
     for i < length {
