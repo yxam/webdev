@@ -166,3 +166,35 @@ func TestHistorialTransferenciaFalse3(t *testing.T){
         t.Error("rut no existe, ni el tipo de orden")
     }
 }
+
+//existe el rut y la cuenta  como originarios
+func TestUltimosMovimientosTrue1(t *testing.T){
+    res :=modelutil.UltimosMovimientos("22222222-2",2)
+    if res == false {
+        t.Error("debería mostrar los movimientos al menos del rut originario")
+    }
+}
+
+//existe el rut y la cuenta como destinatario
+func TestUltimosMovimientosTrue2(t *testing.T){
+    res :=modelutil.UltimosMovimientos("18023904-9",1)
+    if res == false {
+        t.Error("deberia mostrar los movimientos al menos del rut destinatario")
+    }
+}
+
+//no existe rut
+func TestUltimosMovimientosFalse1(t *testing.T){
+    res :=modelutil.UltimosMovimientos("22222222-4",2)
+    if res == true {
+        t.Error("no deberia mostrar nada , no existe el rut")
+    }
+}
+
+//no existe ese tipo de cuenta
+func TestUltimosMovimientosFalse2(t *testing.T){
+    res :=modelutil.UltimosMovimientos("18023904-9",2)
+    if res == true {
+        t.Error("no deberia mostrar nada , no existe el tipo de cuenta")
+    }
+}

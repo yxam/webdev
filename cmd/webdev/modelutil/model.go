@@ -145,16 +145,17 @@ func Transferencia(rut_o string, rut_d string, cantidad int, cuenta_o int, cuent
 	return false
 }
 
-
-/*func HistorialdeTransferencia(rut_o string, orden string) bool{
+/*
+func HistorialdeTransferencia(rut_o string, orden string) bool{
 
 	connect_db()
 	//va a comprobar si el rut existe en la tabla transferencia
-	row :=db.QueryRow("SELECT rut_origen FROM Transferencia WHERE rut_origen = $1", rut_o)
+	row :=db.QueryRow("SELECT * FROM Transferencia WHERE rut_origen = $1", rut_o)
 
 
 	//si no existe el rut en la tabla porque no ha transferido o ingreso mal un orden, no se ingresa
 		if (row.Scan() == sql.ErrNoRows || orden != "fecha" || orden != "tipo_cuenta"){
+			log.Println(orden)
 		disconnect_db()
 		return false
 		}
@@ -162,5 +163,23 @@ func Transferencia(rut_o string, rut_d string, cantidad int, cuenta_o int, cuent
 	_=db.QueryRow("SELECT * from transferencia WHERE rut_origen=$1 ORDER BY $2 ",rut_o, orden)
 	disconnect_db()
 	return true
-}*/
+}
 
+
+func UltimosMovimientos(rut string, numero_cuenta int) bool {
+
+	connect_db()
+	//comprueba que el rut y el numero de cuenta existan
+	row :=db.QueryRow("SELECT * FROM transferencia WHERE (rut_origen=$1 OR rut_destino=$1) AND (cuenta_origen= $2 OR cuenta_destino= $2)", rut, numero_cuenta)
+
+	//si no existe ninguna de esas variables que retorne falso
+	if (row.Scan() == sql.ErrNoRows){
+		disconnect_db()
+		return false
+	}
+
+	_=db.QueryRow("SELECT * from transferencia WHERE (rut_origen=$1 OR rut_destino=$1) AND (cuenta_origen=$2 OR cuenta_destino= $2) ORDER BY fecha",rut, numero_cuenta)
+	disconnect_db()
+	return true
+}
+*/
