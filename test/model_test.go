@@ -79,30 +79,50 @@ func TestLoginFalse4(t *testing.T) {
 }
 
 
-//Se realizó la Transferencia con cuebta destino existente en la bdd
-func TestTransferenciaTrue1(t *testing.T){
-    res :=modelutil.Transferencia("18023904-9",88,50,1000,"sisi")
-    if res == false {
-        t.Error("Se debio transferir")
-    }
-}
-
-//Se realizó la Transferencia con cuenta destino no existente en la bdd
-func TestTransferenciaTrue2(t *testing.T){
-    res :=modelutil.Transferencia("18023904-9",88,100,1000,"sisi")
+//Se realizó la Transferencia con exito
+func TestTransferenciaClienteTrue1(t *testing.T){
+    res :=modelutil.TransferenciaCliente(8888,666,1000,"sisi")
     if res == false {
         t.Error("Se debio transferir")
     }
 }
 
 // no tiene dinero en el saldo para Transferir 
-func TestTransferenciaFalse(t *testing.T){
-    res :=modelutil.Transferencia("18023904-9",88,50,500000,"nono")
+func TestTransferenciaClienteFalse(t *testing.T){
+    res :=modelutil.TransferenciaCliente(8888,666,5000000,"nono")
     if res == true {
         t.Error ("transfirio lo que no debio ser transferido")
     }
 }
 
+//Se realizó la Transferencia con exito y el cliente no existia en la tabla no_cliente
+func TestTransferenciaNoClienteTrue1(t *testing.T){
+    res :=modelutil.TransferenciaNoCliente(8888,3333,500,"sisi y agrega al nocliente","señor x","33333333-3",1,3)
+    if res == false {
+        t.Error("Se debio transferir")
+    }
+}
+
+
+//Se realizó la Transferencia con exito y el nocliente existe
+func TestTransferenciaNoClienteTrue2(t *testing.T){
+    res :=modelutil.TransferenciaNoCliente(8888,3333,500,"sisi y el destinatario ya existe","señor x","33333333-3",1,3)
+    if res == false {
+        t.Error("Se debio transferir")
+    }
+}
+
+
+// no tiene dinero en el saldo para Transferir 
+func TestTransferenciaNoClienteFalse(t *testing.T){
+    res :=modelutil.TransferenciaNoCliente(8888,3333,5000000,"no cuenta con el dinero suficiente","señor x","33333333-3",1,3)
+    if res == true {
+        t.Error ("transfirio lo que no debio ser transferido")
+    }
+}
+
+
+/*
 
 //crear cliente exito! tira FAIL pq ya lo creó, pero en el inicio pasó la prueba
 func TestCrearClienteTrue(t *testing.T){
@@ -135,7 +155,7 @@ func TestCrearClienteFalse3(t *testing.T){
         t.Error("no debio ser creado, rut existe y password dont match")
     }
 }
-/*
+
 //deberia mostrar orden por fecha
 func TestHistorialTransferenciaTrue1(t *testing.T){
     res :=modelutil.HistorialdeTransferencia("22222222-2","fecha")
