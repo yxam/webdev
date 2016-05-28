@@ -24,7 +24,7 @@ func TestLoginTrue1(t *testing.T) {
 
 //Rut existente
 func TestLoginTrue2(t *testing.T) {
-    res := modelutil.Login("18540928-7", "1234") 
+    res := modelutil.Login("18023904-9", "7894") 
     if res == false {
         t.Error("La cuenta si existe")
     }
@@ -46,7 +46,7 @@ func TestLoginTrue4(t *testing.T) {
     }
 }
 
-//Rut inexistente
+//Rut existente pero contraseña falsa
 func TestLoginFalse1(t *testing.T) {
     res := modelutil.Login("10100100-1", "0001") 
     if res == true {
@@ -79,9 +79,17 @@ func TestLoginFalse4(t *testing.T) {
 }
 
 
-//Se realizó la Transferencia
-func TestTransferenciaTrue(t *testing.T){
-    res :=modelutil.Transferencia("22222222-2","18023904-9",500,1,1)
+//Se realizó la Transferencia con cuebta destino existente en la bdd
+func TestTransferenciaTrue1(t *testing.T){
+    res :=modelutil.Transferencia("18023904-9",88,50,1000,"sisi")
+    if res == false {
+        t.Error("Se debio transferir")
+    }
+}
+
+//Se realizó la Transferencia con cuenta destino no existente en la bdd
+func TestTransferenciaTrue2(t *testing.T){
+    res :=modelutil.Transferencia("18023904-9",88,100,1000,"sisi")
     if res == false {
         t.Error("Se debio transferir")
     }
@@ -89,7 +97,7 @@ func TestTransferenciaTrue(t *testing.T){
 
 // no tiene dinero en el saldo para Transferir 
 func TestTransferenciaFalse(t *testing.T){
-    res :=modelutil.Transferencia("10100100-1","18023904-9",500000,1,1)
+    res :=modelutil.Transferencia("18023904-9",88,50,500000,"nono")
     if res == true {
         t.Error ("transfirio lo que no debio ser transferido")
     }
@@ -98,7 +106,7 @@ func TestTransferenciaFalse(t *testing.T){
 
 //crear cliente exito! tira FAIL pq ya lo creó, pero en el inicio pasó la prueba
 func TestCrearClienteTrue(t *testing.T){
-    res :=modelutil.IngCliente("22222222-2", 123, 123)
+    res :=modelutil.IngCliente("18023904-9","Maria Cristina", "sesamo avenue", "renca","santiago",456123, "hola@hola.com", "hola", "hola")
     if res == false {
         t.Error ("debió ser creada")
     }
@@ -106,27 +114,28 @@ func TestCrearClienteTrue(t *testing.T){
 
 //el rut existe por lo tanto no deberia crear cliente
 func TestCrearClienteFalse1(t *testing.T){
-    res :=modelutil.IngCliente("18023904-9", 123, 123)
+    res :=modelutil.IngCliente("18023904-9", "Maria Cristina", "sesamo avenue", "renca", "santiago",456123, "hola@hola.com", "hola", "hola")
     if res == true {
         t.Error("no debio de ser creada, el rut ya existe")
     }
 }
 
-//el rut existe, pero las constraseñas no concuerdan
+//el rut no existe, pero las constraseñas no concuerdan
 func TestCrearClienteFalse2(t *testing.T){
-    res :=modelutil.IngCliente("33333333-3", 123, 321)
+    res :=modelutil.IngCliente("33333333-3", "john bonachon", "sesamo avenue", "renca", "santiago", 789456, "chai@chai.com", "hola", "chao")
     if res == true {
         t.Error("no debio ser creado, password dont match")
     }
 }
-//rut existe, password no concuerda, no deberia ser creado por ningun motivo
+
+//el rut existe, pero las constraseñas no concuerdan
 func TestCrearClienteFalse3(t *testing.T){
-    res :=modelutil.IngCliente("18023904-9", 123, 321)
-    if res == true{
-        t.Error("el rut ya existe, password dont match")
+    res :=modelutil.IngCliente("18023904-9", "Maria Bonachon", "lejos", "muy lejos", "muy muy lejos", 789456123, "chai@hola.com", "si", "no")
+    if res == true {
+        t.Error("no debio ser creado, rut existe y password dont match")
     }
 }
-
+/*
 //deberia mostrar orden por fecha
 func TestHistorialTransferenciaTrue1(t *testing.T){
     res :=modelutil.HistorialdeTransferencia("22222222-2","fecha")
@@ -197,4 +206,4 @@ func TestUltimosMovimientosFalse2(t *testing.T){
     if res == true {
         t.Error("no deberia mostrar nada , no existe el tipo de cuenta")
     }
-}
+}*/
