@@ -42,14 +42,13 @@ func disconnect_db() {
 func Init() bool {
 	connect_db()
 
-    var create [6]string
-	create[0] = "CREATE TABLE IF NOT EXISTS Cliente(Rut  varchar(12), Password varchar[4] NOT NULL ,Nombre string NOT NULL, Direccion string NOT NULL, Comuna string NOT NULL, Ciudad string NOT NULL, Telefono string  NOT NULL, mail string,PRIMARY KEY(Rut) )"
-	create[1] = "CREATE TABLE IF NOT EXISTS Banco (Id int, Nombre string, Ciudad string, PRIMARY KEY (Id))"
+    var create [5]string
+	create[0] = "CREATE TABLE IF NOT EXISTS Cliente(Rut  varchar(12), Password varchar[4] NOT NULL ,Nombre varchar(200) NOT NULL, Direccion varchar(200) NOT NULL, Comuna varchar(50) NOT NULL, Ciudad varchar(50) NOT NULL, Telefono varchar(20)  NOT NULL, mail varchar(50),PRIMARY KEY(Rut) )"
+    create[1] = "CREATE TABLE IF NOT EXISTS Tipo_cuentas(Id int, Nombre varchar(200) NOT NULL, PRIMARY KEY(Id))"
 	create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(Nmro_cuenta bigint, rut_cliente varchar(12) REFERENCES Cliente(Rut), Tipo integer REFERENCES Tipo_cuentas(Id) NOT NULL, Saldo integer NOT NULL, PRIMARY KEY(Nmro_cuenta))"
-    create[3] = "CREATE TABLE IF NOT EXISTS Transferencia(Id bigint AUTO_INCREMENT, Cuenta_origen bigint REFERENCES Cuenta(Nmro_cuenta), Cuenta_destino bigint  NOT NULL, Monto int NOT NULL, Fecha timestamp NOT NULL, PRIMARY KEY(Id))"
-    create[4] = "CREATE TABLE IF NOT EXISTS Persona_nocliente(Rut varchar(12), Nombre string, Nmro_cuenta bigint, Tipo integer REFERENCES Tipo_cuentas(Id), Banco int REFERENCES Banco(Id), PRIMARY KEY(Rut))"
-    create[5] = "CREATE TABLE IF NOT EXISTS Banco(Id int, Nombre string NOT NULL, Ciudad string NOT NULL, PRIMARY KEY (Id))"
-
+    create[3] = "CREATE TABLE IF NOT EXISTS Transferencia(Id serial, Cuenta_origen bigint REFERENCES Cuenta(Nmro_cuenta), Cuenta_destino bigint  NOT NULL, Monto int NOT NULL, Fecha timestamp NOT NULL, PRIMARY KEY(Id))"
+    create[4] = "CREATE TABLE IF NOT EXISTS Persona_nocliente(Rut varchar(12), Nombre varchar(200), Nmro_cuenta bigint, Tipo integer REFERENCES Tipo_cuentas(Id), Banco int REFERENCES Banco(Id), PRIMARY KEY(Rut))"
+    create[5] = "CREATE TABLE IF NOT EXISTS Banco(Id int, Nombre varchar(200) NOT NULL, Ciudad varchar(200) NOT NULL, PRIMARY KEY (Id))"
     var length = cap(create)
     i := 0
     for i < length {
@@ -62,7 +61,7 @@ func Init() bool {
 	}
 	disconnect_db()
 	return true
-}
+}	
 
 func Login(rut, pass string) bool {
 	connect_db()

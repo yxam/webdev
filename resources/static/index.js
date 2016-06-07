@@ -12,7 +12,8 @@ var index = React.createClass({
                    </font>
                    <button type="submit" className="button" >login</button>                    
                    
-                </form>  
+                <p class="message" >Si desea registrarse en banco presione <a href="#">Aquí</a>. </p>  
+                </form>
              </div>
           </div></div>
           );

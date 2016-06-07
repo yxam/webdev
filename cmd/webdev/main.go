@@ -21,8 +21,8 @@ func main() {
 func StartGin(port string) {
 	gin.SetMode(gin.ReleaseMode)
 
-	router := gin.New()
-	router.Use(gin.Logger(), gin.Recovery(), ipNotAllowed())
+	router := gin.Default()
+	//router.Use(ipNotAllowed())
 	log.Print(router)
 	router.LoadHTMLGlob("resources/*.html")
 	router.Static("/static", "resources/static")
