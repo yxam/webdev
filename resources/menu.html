@@ -21,7 +21,17 @@
 
 
     <script type="text/babel" src="/static/menu.js"></script>
-
+ <!--   <script type="text/javascript">
+        $(document).ready(function() {
+            var data=new Object();
+            data.nombre="Arturo Vidal";
+            data.rut="{{.Rut_cliente}}";
+            data.saldo="{{.Saldo}}";
+            function getrut(){
+                return data.rut;
+            }
+        });
+    </script> -->
 </head>
 <body style="background-color:#D8D8D8">
     
@@ -37,7 +47,7 @@
    <div class="row">
         <div class="col-xs-2">
             <div class="btn-group-vertical" role="group">
-                <a class="btn btn-success" title="Para editar su información personal entre aquí" href="#" id="perfil">Mi perfil</a>
+                <a class="btn btn-success"  title="Para editar su información personal entre aquí" href="#" id="perfil" >Mi perfil</a>
                 <button class="btn btn-success" title="Vea los ultimos movimientos de su cuenta aquí" href="#" id="mov">Últimos movimientos</button>
                 <button class="btn btn-success" title="Sí desea transferir fondos ingrese aquí">Transferencias</button>
                 <button class="btn btn-success">Pago Cuentas</button>
@@ -47,7 +57,11 @@
    </div>
    <div class="col-xs-8">
                 
-                <div id="content"></div>
+                <div id="content">
+                <input name="nombre" value="Arturo Vidal" type="hidden" />
+                <input name="rut" value="{{.Rut_cliente}}" type="hidden"/>
+                <input name="saldo" value="{{.Saldo}}" type="hidden" /> 
+                </div>
                 
    </div>
    </div>

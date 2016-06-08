@@ -1,5 +1,7 @@
         $(document).ready(function(){
                 $('#perfil').click(function(){
+                 var datos=document.getElementsByTagName('input');
+                 console.log(datos[0].value);
                  var Perfil= React.createClass({
                  render:function(){
                     return(
@@ -9,10 +11,13 @@
                              <tr>Datos personales</tr>
                          </thead>
                          <tbody>
-                            <tr><td>Nombre: </td><td>Farid </td><td>RUT: </td><td colspan="2">{{.Rut_cliente}}</td></tr>
+                            <tr>
+                            <td>Nombre: </td><td>{datos[0].value}</td>
+                            <td>RUT:</td><td colspan="2">{datos[1].value}</td>
+                            </tr>
                             <tr><td>Dirección: </td><td>EDITABLE</td><td>Télefono: </td><td>EDITABLE</td>
                             <td>Email: </td><td>EDITABLE</td></tr>
-                            <tr><td>Saldo: </td><td>{{.Saldo}}</td><td>Tipo de cuenta:</td><td></td><td>Número de cuenta: </td><td></td></tr>
+                            <tr><td>Saldo: </td><td>$$$$$$</td><td>Tipo de cuenta:</td><td></td><td>Número de cuenta: </td><td></td></tr>
                          </tbody>
                      </table>
                      <button id="sent-btn" type="button" className="btn btn-success">Editar información</button>
@@ -21,6 +26,8 @@
                  }
                  });
                  ReactDOM.render(<Perfil/>,document.getElementById('content'));
+
+
                 });
 
                 $('#mov').click(function(){

@@ -17,7 +17,7 @@ type Information struct {
 }
 
 type Account_s struct {
-	Id int
+	Nmro_cuenta int
 	Rut_cliente string
 	Tipo int
 	Saldo int
@@ -42,7 +42,7 @@ func disconnect_db() {
 func Init() bool {
 	connect_db()
 
-    var create [5]string
+    var create []string
 	create[0] = "CREATE TABLE IF NOT EXISTS Cliente(Rut  varchar(12), Password varchar[4] NOT NULL ,Nombre varchar(200) NOT NULL, Direccion varchar(200) NOT NULL, Comuna varchar(50) NOT NULL, Ciudad varchar(50) NOT NULL, Telefono varchar(20)  NOT NULL, mail varchar(50),PRIMARY KEY(Rut) )"
     create[1] = "CREATE TABLE IF NOT EXISTS Tipo_cuentas(Id int, Nombre varchar(200) NOT NULL, PRIMARY KEY(Id))"
 	create[2] = "CREATE TABLE IF NOT EXISTS Cuenta(Nmro_cuenta bigint, rut_cliente varchar(12) REFERENCES Cliente(Rut), Tipo integer REFERENCES Tipo_cuentas(Id) NOT NULL, Saldo integer NOT NULL, PRIMARY KEY(Nmro_cuenta))"
@@ -66,7 +66,7 @@ func Init() bool {
 func Login(rut, pass string) bool {
 	connect_db()
 	var tmp string
-	err := db.QueryRow("SELECT pass FROM cliente WHERE rut=$1 AND pass=$2", rut, pass).Scan(&tmp)
+	err := db.QueryRow("SELECT password FROM cliente WHERE rut=$1 AND password=$2", rut, pass).Scan(&tmp)
 	defer disconnect_db()
 	switch {
 		case err == sql.ErrNoRows:
@@ -83,9 +83,9 @@ func Account(rut string) (Account_s, error) {
 	var tmp Account_s
 	log.Printf("rut -> ", rut)
 	fmt.Println(rut)
-	row := db.QueryRow("SELECT id, rut_cliente, tipo, saldo FROM cuenta WHERE cuenta.rut_cliente = $1", rut).Scan(&tmp.Id,&tmp.Rut_cliente,&tmp.Tipo,&tmp.Saldo)
+	row := db.QueryRow("SELECT Nmro_cuenta, rut_cliente, tipo, saldo FROM cuenta WHERE cuenta.rut_cliente = $1", rut).Scan(&tmp.Nmro_cuenta,&tmp.Rut_cliente,&tmp.Tipo,&tmp.Saldo)
 	log.Print(row)
-	log.Printf("Dentro de acc -> ", tmp.Id)
+	log.Printf("Dentro de acc -> ", tmp.Nmro_cuenta)
 	disconnect_db()
 	//tmp.s = true
 	switch {
